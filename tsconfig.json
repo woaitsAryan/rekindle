@@ -1,0 +1,3 @@
+{
+	"extends": "@rekindle/typescript-config/base.json"
+}

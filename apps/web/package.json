@@ -5,9 +5,15 @@
 	"scripts": {
 		"dev": "next dev --turbopack",
 		"build": "next build",
-		"start": "next start"
+		"start": "next start",
+		"db:push": "prisma db push",
+		"db:generate": "prisma generate",
+		"db:studio": "prisma studio"
 	},
 	"dependencies": {
+		"@rekindle/db": "*",
+		"@rekindle/api-schema": "*",
+		"@rekindle/typescript-config": "*",
 		"@radix-ui/react-navigation-menu": "^1.2.3",
 		"@radix-ui/react-slot": "^1.1.1",
 		"@supabase/ssr": "^0.5.2",

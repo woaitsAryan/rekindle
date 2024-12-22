@@ -1,0 +1,19 @@
+{
+	"name": "@rekindle/api-schema",
+	"type": "module",
+	"main": "index.ts",
+	"types": "index.ts",
+	"scripts": {
+		"build": "bun build index.ts --outdir build --target bun"
+	},
+	"dependencies": {
+		"@rekindle/db": "*",
+		"zod": "^3.24.1"
+	},
+	"peerDependencies": {
+		"@rekindle/typescript-config": "*"
+	},
+	"devDependencies": {
+		"typescript": "^5"
+	}
+}

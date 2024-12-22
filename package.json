@@ -1,9 +1,6 @@
 {
+	"name": "rekindle",
 	"private": true,
-	"prisma": {
-		"schema": "packages/database/prisma/schema.prisma",
-		"seed": "tsx packages/database/src/seed.ts"
-	},
 	"scripts": {
 		"build": "turbo run build",
 		"web:dev": "cd apps/web && bun run dev",
@@ -20,18 +17,15 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
-		"prettier": "^3.2.5",
-		"prisma": "5.10.2",
-		"tsx": "4.19.1",
+		"@rekindle/typescript-config": "*",
 		"turbo": "^2.3.3"
 	},
 	"engines": {
 		"node": ">=18"
 	},
-	"name": "with-prisma",
-	"dependencies": {
-		"@prisma/client": "5.10.2"
-	},
 	"packageManager": "bun@1.1.34",
-	"workspaces": ["apps/*", "packages/*"]
+	"workspaces": ["apps/*", "packages/*"],
+	"dependencies": {
+		"dotenv-cli": "^8.0.0"
+	}
 }
