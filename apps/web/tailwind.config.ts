@@ -8,7 +8,15 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+		fontFamily: {
+			gowun: ['var(--font-gowun-batang)', 'system-ui'],
+			quicksand: ['var(--font-quicksand)', 'system-ui'],
+			inter: ['var(--font-inter)', 'system-ui']
+		},
   	extend: {
+			backgroundImage: {
+				'blue-circle': "url('https://web.archive.org/web/20240810132123im_/https://cdn.prod.website-files.com/65ddc8ecc04a25d5db8b12f9/65df414c947339c4d4b53d95_Shape.svg')"
+			},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
