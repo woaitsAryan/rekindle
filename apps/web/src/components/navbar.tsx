@@ -19,7 +19,7 @@ export default function Navbar(props: NavbarProps) {
 	const pathname = usePathname();
 
 	return (
-		<nav className="flex flex-row fixed justify-between top-0 left-0 items-center w-full px-24 py-3 border border-b border-neutral-200 font-inter backdrop-blur-sm">
+		<nav className="flex flex-row fixed justify-between top-0 left-0 items-center w-full px-24 py-3 border border-b border-neutral-200 font-inter backdrop-blur-3xl">
 			<Logo className="h-14 w-48" />
 			<NavigationMenu>
 				<NavigationMenuList className="font-medium gap-2">
