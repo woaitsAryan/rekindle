@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 declare global {
-  let prisma: PrismaClient;
+	let prisma: PrismaClient;
 }
 
 const globalForPrisma = global as typeof globalThis & { prisma: PrismaClient };

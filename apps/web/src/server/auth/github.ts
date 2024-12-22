@@ -1,19 +1,22 @@
-'use server'
+"use server";
 
-import { createClient } from "@/lib/supabase/server"
-import { redirect } from "next/navigation"
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 export async function signInWithGithub() {
-  const supabase = await createClient()
+	const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'github',
-    options: {
-      redirectTo: 'http://localhost:3000/api/auth/callback',
-    },
-  })
+	const { data, error } = await supabase.auth.signInWithOAuth({
+		provider: "github",
+		options: {
+			redirectTo: "http://localhost:3000/api/auth/callback",
+		},
+	});
+	if (error) {
+		throw new Error(error.message);
+	}
 
-  if (data.url) {
-    redirect(data.url)
-  }
+	if (data.url) {
+		redirect(data.url);
+	}
 }

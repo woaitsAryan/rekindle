@@ -1,3 +1,4 @@
+import Features from "@/components/landing/features";
 import Hero from "@/components/landing/hero";
 import Navbar, { NavbarConfig } from "@/components/navbar";
 
@@ -6,7 +7,7 @@ export default function Home() {
 		<div className="font-bold">
 			<Navbar navbarLinks={NavbarConfig} />
 			<Hero />
-			<div>dopskdosk</div>
+			<Features />
 		</div>
 	);
 }

@@ -1,14 +1,14 @@
 "use client";
 
-import * as React from "react";
-import Link from "next/link";
 import {
 	NavigationMenu,
 	NavigationMenuItem,
 	NavigationMenuLink,
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import * as React from "react";
 import Logo from "./logo";
 
 interface NavbarProps {
@@ -20,7 +20,7 @@ export default function Navbar(props: NavbarProps) {
 
 	return (
 		<nav className="flex flex-row fixed justify-between top-0 left-0 items-center w-full px-24 py-3 border border-b border-neutral-200 font-inter backdrop-blur-sm">
-			<Logo className="h-14 w-48"/>
+			<Logo className="h-14 w-48" />
 			<NavigationMenu>
 				<NavigationMenuList className="font-medium gap-2">
 					{props.navbarLinks.map((navbarLink) => (

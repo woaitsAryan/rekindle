@@ -14,14 +14,15 @@ export default function Hero() {
 				</h1>
 				<div className="flex flex-col gap-4">
 					<h3 className="font-normal text-lg">
-						In just 10 minutes Clara protects you from liability and costly tax
-						penalties, because you have enough on your plate already
+						In just a few minutes, start capturing your life story in a safe,
+						supportive space designed for those living with Alzheimer&apos;s and
+						Dementia
 					</h3>
 					<div className="flex flex-row gap-3">
 						<Button className="bg-cyan-950 hover:bg-cyan-800">
-							Get started
+							Start writing
 						</Button>
-						<Button variant="outline">Get started</Button>
+						<Button variant="outline">Learn more</Button>
 					</div>
 				</div>
 			</div>
