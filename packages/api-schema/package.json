@@ -4,7 +4,7 @@
 	"main": "index.ts",
 	"types": "index.ts",
 	"scripts": {
-		"build": "bun build index.ts --outdir build --target bun"
+		"build": "bun build index.ts --outdir dist --target bun"
 	},
 	"dependencies": {
 		"@rekindle/db": "*",
