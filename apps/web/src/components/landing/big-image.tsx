@@ -2,12 +2,13 @@ import Image from "next/image";
 
 export default function BigImage() {
 	return (
-		<div className="w-[85%] mx-auto">
+		<div className="w-wrapper flex justify-center mx-auto">
 			<Image
-				src="https://web.archive.org/web/20240718070250im_/https://cdn.prod.website-files.com/65ddc8ecc04a25d5db8b12f9/65e76daff5a6ceb66619e635_Mask%20group%20(7).webp"
+				src="/images/secondary-hero-img.webp"
 				alt=""
-				width="1000"
-				height="1000"
+				className="w-wrapper h-auto"
+				width={1920}
+				height={1080}
 			/>
 		</div>
 	);

@@ -19,8 +19,9 @@ export default function Navbar(props: NavbarProps) {
 	const pathname = usePathname();
 
 	return (
-		<nav className="flex flex-row fixed justify-between top-0 left-0 items-center w-full px-24 py-3 border border-b border-neutral-200 font-inter backdrop-blur-3xl">
-			<Logo className="h-14 w-48" />
+		<div className="w-full fixed top-0 left-0 flex justify-center bg-white border border-b border-neutral-200 z-[100] " id="--nav-wrapper">
+			<nav className="flex flex-row max-w-maxw  justify-between  items-center w-wrapper py-3   font-inter bg-white">
+			<Logo className="h-12 w-auto" />
 			<NavigationMenu>
 				<NavigationMenuList className="font-medium gap-2">
 					{props.navbarLinks.map((navbarLink) => (
@@ -44,6 +45,7 @@ export default function Navbar(props: NavbarProps) {
 				Sign up
 			</Link>
 		</nav>
+		</div>
 	);
 }
 

@@ -14,6 +14,12 @@ export default {
 			inter: ["var(--font-inter)", "system-ui"],
 		},
 		extend: {
+			width:{
+				wrapper:'90%',
+			},
+			maxWidth:{
+				maxw:'1800px'
+			},
 			backgroundImage: {
 				"blue-circle":
 					"url('https://web.archive.org/web/20240810132123im_/https://cdn.prod.website-files.com/65ddc8ecc04a25d5db8b12f9/65df414c947339c4d4b53d95_Shape.svg')",

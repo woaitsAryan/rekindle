@@ -18,7 +18,7 @@ const Logo = (props: React.SVGProps<SVGSVGElement>) => (
 			id="SvgjsG1842"
 			transform="matrix(0.8546785171932846,0,0,0.8546785171932846,-13.028565636717499,-6.518289775976053)"
 			fill="url(#SvgjsLinearGradient1846)"
-		>
+>
 			<path
 				xmlns="http://www.w3.org/2000/svg"
 				d="M32.317,85.5H24.961a1.25,1.25,0,0,1,0-2.5h7.356a1.25,1.25,0,0,1,0,2.5Z"
@@ -59,5 +59,6 @@ const Logo = (props: React.SVGProps<SVGSVGElement>) => (
 		</g>
 	</svg>
 );
+
 
 export default Logo;
