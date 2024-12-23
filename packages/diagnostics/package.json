@@ -1,14 +1,14 @@
 {
-  "name": "@rekindle/diagnostics",
-  "main": "./index.ts",
-  "scripts": {
-    "build": "bun build index.ts --outdir build --target bun"
-  },
-  "types": "./index.ts",
-  "exports": {
-    ".": "./index.ts"
-  },
-  "dependencies": {
-    "winston": "^3.17.0"
-  }
+	"name": "@rekindle/diagnostics",
+	"main": "./index.ts",
+	"scripts": {
+		"build": "bun build index.ts --outdir build --target bun"
+	},
+	"types": "./index.ts",
+	"exports": {
+		".": "./index.ts"
+	},
+	"dependencies": {
+		"winston": "^3.17.0"
+	}
 }

@@ -11,7 +11,7 @@ export async function signInWithGithub() {
 		provider: "github",
 		options: {
 			redirectTo: `${env.NEXT_PUBLIC_FRONTEND_URL}/api/auth/callback?next=/on-login`,
-		}, 
+		},
 	});
 	if (error) {
 		throw new Error(error.message);

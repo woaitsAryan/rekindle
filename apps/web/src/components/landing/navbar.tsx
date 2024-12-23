@@ -37,7 +37,8 @@ export default function Navbar(props: NavbarProps) {
 					))}
 				</NavigationMenuList>
 			</NavigationMenu>
-			<Link href="/login"
+			<Link
+				href="/login"
 				className="text-white bg-cyan-950 font-semibold text-base rounded-sm px-6 py-2 transition-all duration-200 hover:bg-cyan-900 hover:scale-105"
 			>
 				Sign up
