@@ -9,5 +9,5 @@ export default async function DashboardWrapper() {
 		redirect("/dashboard");
 	}
 
-	return <>{user}</>;
+	return <>{JSON.stringify(user)}</>;
 }
