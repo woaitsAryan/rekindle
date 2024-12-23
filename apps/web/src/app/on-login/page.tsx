@@ -12,5 +12,5 @@ export default async function OnLogin() {
 
 	await upsertUser(data.user);
 
-	return <div>Nice</div>;
+	redirect("/dashboard")
 }

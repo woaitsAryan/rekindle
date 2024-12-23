@@ -2,6 +2,20 @@ import { env } from "@/env";
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
+const exactMatchRoutes = [
+	'/',
+	'/login'
+];
+
+const prefixMatchRoutes = [
+	'/api/auth'
+];
+
+const isPublicRoute = (path: string) => {
+	return exactMatchRoutes.includes(path) ||
+		prefixMatchRoutes.some(route => path.startsWith(route));
+};
+
 export async function updateSession(request: NextRequest) {
 	let supabaseResponse = NextResponse.next({
 		request,
@@ -37,15 +51,20 @@ export async function updateSession(request: NextRequest) {
 	// IMPORTANT: DO NOT REMOVE auth.getUser()
 
 	const {
-		data: { user },
+		data: { user }, error
 	} = await supabase.auth.getUser();
 
+	if (error && !isPublicRoute(request.nextUrl.pathname)) {
+		console.error(error)
+		const url = request.nextUrl.clone();
+		url.pathname = "/login";
+		return NextResponse.redirect(url);
+	}
+
 	if (
-		!user &&
-		!request.nextUrl.pathname.startsWith("/login") &&
-		!request.nextUrl.pathname.startsWith("/api/auth") &&
-		request.nextUrl.pathname !== "/"
+		!user && !isPublicRoute(request.nextUrl.pathname)
 	) {
+		console.error("No user found")
 		// no user, potentially respond by redirecting the user to the login page
 		const url = request.nextUrl.clone();
 		url.pathname = "/login";

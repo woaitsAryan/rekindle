@@ -9,7 +9,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
-import Logo from "./logo";
+import Logo from "../logo";
 
 interface NavbarProps {
 	navbarLinks: typeof NavbarConfig;
@@ -37,12 +37,11 @@ export default function Navbar(props: NavbarProps) {
 					))}
 				</NavigationMenuList>
 			</NavigationMenu>
-			<button
-				type="button"
+			<Link href="/login"
 				className="text-white bg-cyan-950 font-semibold text-base rounded-sm px-6 py-2 transition-all duration-200 hover:bg-cyan-900 hover:scale-105"
 			>
 				Sign up
-			</button>
+			</Link>
 		</nav>
 	);
 }
