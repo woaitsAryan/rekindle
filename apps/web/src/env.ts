@@ -5,6 +5,7 @@ export const env = createEnv({
 	server: {
 		DATABASE_URL: z.string(),
 		DIRECT_URL: z.string(),
+		BACKEND_URL: z.string()
 	},
 
 	/**
