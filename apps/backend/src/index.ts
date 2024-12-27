@@ -1,21 +1,30 @@
-import { Hono } from 'hono'
-import { handleTest } from './controllers/testing.controller'
-import { ENV, init_env } from './config/env'
-import { authMiddleware } from './middleware/auth.middleware'
+import { ENV, init_env } from "@/config/env";
+import { handleChatCompletion } from "@/controllers/chat.controller";
+import { authMiddleware } from "@/middleware/auth.middleware";
+import { usageMiddleware } from "@/middleware/usage.middleware";
+import { zValidator } from "@/middleware/validator.middleware";
+import { ChatBodySchema } from "@rekindle/api-schema";
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { logger } from "hono/logger";
 
-init_env()
+init_env();
 
-const app = new Hono()
+const app = new Hono();
 
-app.get('/', (c) => {
-  return c.text('Hello world!')
-})
+app.use(logger());
 
-app.use('/v1/*', authMiddleware)
+app.use(cors());
 
-app.get('/v1/protected', handleTest)
+app.get("/", (c) => c.text("Hello world!"));
+
+app.use("*", authMiddleware);
+
+app.use("*", usageMiddleware);
+
+app.post("/chat", zValidator("json", ChatBodySchema), handleChatCompletion);
 
 export default {
 	port: ENV.PORT,
 	fetch: app.fetch,
-}
+};

@@ -11,7 +11,7 @@
 		"format-and-lint": "biome check .",
 		"format-and-lint:fix": "biome check . --write",
 		"db:seed": "turbo run db:seed",
-		"dev": "turbo run dev",	
+		"dev": "turbo run dev",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
 		"generate": "turbo run generate",
 		"lint": "turbo run lint lint:root",

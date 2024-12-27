@@ -9,21 +9,50 @@ datasource db {
 }
 
 model User {
-  id       String    @id @unique
-  email    String
-  provider Providers
+  id    String @id @unique
+  email String @unique
+  name  String
 
   metadata Json
+  memories Memory[]
 
   tombstonedAt Boolean?
   tombstoned   Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-
-  @@unique([email, provider])
 }
 
-enum Providers {
-  github
-  google
+model Memory {
+  id      String @id @default(uuid())
+  content String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  messages Message[]
+
+  tombstonedAt Boolean?
+  tombstoned   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Message {
+  id String @id @default(uuid())
+
+  memory   Memory @relation(fields: [memoryId], references: [id], onDelete: Cascade)
+  memoryId String
+
+  sender  MessageSender
+  content String
+
+  tombstoned   Boolean  @default(false)
+  tombstonedAt Boolean?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+enum MessageSender {
+  USER
+  BOT
 }

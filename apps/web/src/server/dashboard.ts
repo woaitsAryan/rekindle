@@ -1,15 +1,23 @@
-'use server'
+"use server";
 
-import { getAccessToken, SupabaseAPI } from "@/lib/supabase/request"
-import { createClient } from "@/lib/supabase/server"
-import { cookies } from "next/headers"
+import { SupabaseAPI, getAccessToken } from "@/lib/supabase/request";
+import { createClient } from "@/lib/supabase/server";
+import { cookies } from "next/headers";
 
-export async function makeRequest(){
-	const access_token = await getAccessToken()	
-	const api = new SupabaseAPI(access_token)
+export async function makeRequest() {
+	const access_token = await getAccessToken();
+	const api = new SupabaseAPI(access_token);
 
-	const um = await api.GET("/v1/protected")
+	const inputBody = {
+		messages: [
+			{
+				content: "Hey how are you doing",
+				role: "user",
+			},
+		],
+	};
 
-	console.log(um)
+	const um = await api.POST("/chat", inputBody);
 
+	console.log(um);
 }

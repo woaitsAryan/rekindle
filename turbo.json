@@ -9,13 +9,13 @@
 	],
 	"tasks": {
 		"build": {
-      "dependsOn": ["^build", "^db:generate"],
+			"dependsOn": ["^build", "^db:generate"],
 			"inputs": ["$TURBO_DEFAULT$", ".env*"],
 			"outputs": ["dist/**", ".next/**", "!.next/cache/**"]
 		},
 		"db:generate": {
-      "cache": false
-    },
+			"cache": false
+		},
 		"db:migrate:deploy": {},
 		"db:push": {},
 		"db:seed": {},

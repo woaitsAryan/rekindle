@@ -14,11 +14,11 @@ export default {
 			inter: ["var(--font-inter)", "system-ui"],
 		},
 		extend: {
-			width:{
-				wrapper:'90%',
+			width: {
+				wrapper: "90%",
 			},
-			maxWidth:{
-				maxw:'1800px'
+			maxWidth: {
+				maxw: "1800px",
 			},
 			backgroundImage: {
 				"blue-circle":

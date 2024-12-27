@@ -1,19 +1,26 @@
 {
-  "name": "backend",
-  "scripts": {
-    "dev": "bun run --hot src/index.ts",
-    "build": "bun build src/index.ts --outdir dist",
-    "start": "bun run ./dist/index.js"
-  },
-  "dependencies": {
-    "@rekindle/db": "*",
-    "@rekindle/diagnostics": "*",
-    "@supabase/supabase-js": "^2.47.10",
-    "hono": "^4.6.14",
-    "zod": "^3.24.1"
-  },
-  "devDependencies": {
-    "@cloudflare/workers-types": "^4.20241218.0",
-    "@types/bun": "latest"
-  }
+	"name": "backend",
+	"scripts": {
+		"dev": "dotenv -e ../../.env -- bun run --hot src/index.ts",
+		"build": "dotenv -e ../../.env -- bun build src/index.ts --outdir dist",
+		"start": "dotenv -e ../../.env -- bun run ./dist/index.js"
+	},
+	"dependencies": {
+		"@ai-sdk/openai": "^1.0.11",
+		"@hono/zod-validator": "^0.4.2",
+		"@rekindle/api-schema": "*",
+		"@rekindle/db": "*",
+		"@rekindle/diagnostics": "*",
+		"@rekindle/typescript-config": "*",
+		"@supabase/supabase-js": "^2.47.10",
+		"ai": "^4.0.22",
+		"hono": "^4.6.14",
+		"llamaindex": "^0.8.30",
+		"openai": "^4.77.0",
+		"zod": "^3.24.1"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20241218.0",
+		"@types/bun": "latest"
+	}
 }

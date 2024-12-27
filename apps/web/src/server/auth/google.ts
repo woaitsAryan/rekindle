@@ -1,9 +1,9 @@
 "use server";
 
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import { env } from "@/env";
- 
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+
 export async function signInWithGoogle() {
 	const supabase = await createClient();
 
