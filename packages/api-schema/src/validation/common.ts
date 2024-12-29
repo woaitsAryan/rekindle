@@ -19,4 +19,10 @@ export const CompletionMetadata = z.object({
 	})
 })
 
+export const PaginationQuery = z.object({
+	page: z.string().transform(Number).pipe(z.number().int()),
+	limit: z.string().transform(Number).pipe(z.number().int())
+})
+
+export type PaginationQueryType = z.infer<typeof PaginationQuery>
 export type CompletionMetadataType = z.infer<typeof CompletionMetadata>

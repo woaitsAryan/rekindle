@@ -7,11 +7,11 @@ import type { Context } from "hono";
 import { stream } from 'hono/streaming'
 import { DB } from '@rekindle/db'
 import { dbQueue } from "@/helpers/queue";
-import type { CreateGenericBody } from "@rekindle/api-schema/utils";
+import type { CreateGenericJson } from "@rekindle/api-schema/utils";
 import type { ChatBody, CompletionMetadataType } from "@rekindle/api-schema/validation";
 
 export const handleChatCompletion = async (
-	c: Context<AuthenticatedEnv, string, CreateGenericBody<ChatBody>>,
+	c: Context<AuthenticatedEnv, "/chat", CreateGenericJson<ChatBody>>,
 ) => {
 	const user = c.get(CONTEXT_VARIABLES.User);
 	const { messages, id } = c.req.valid("json");
@@ -44,7 +44,7 @@ export const handleChatCompletion = async (
 					const completion = DB.completion.create({
 						tokens: chunk.usage.total_tokens,
 						memoryId: memory.id,
-						metadata: chunk.usage as unknown as CompletionMetadataType
+						metadata: chunk as unknown as CompletionMetadataType
 					})
 					dbQueue.addQuery(completion)
 				}

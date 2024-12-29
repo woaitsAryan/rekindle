@@ -1,10 +1,10 @@
 "use server";
 import { createClient } from "@/lib/supabase/server";
 import prisma from "@rekindle/db";
-import { enums, isValidEnumValue } from "@rekindle/db/enums";
-
 import { logger } from "@/lib/logger";
 import type { User } from "@supabase/supabase-js";
+
+console.warn = () => { };
 
 export async function upsertUser(user: User) {
 	if (!user.email) {
@@ -67,4 +67,22 @@ export async function getUserFromCookies() {
 	}
 
 	return existingUser;
+}
+
+export async function getUserSession() {
+	const supabase = await createClient();
+
+	const { data, error } = await supabase.auth.getSession();
+
+	if (error) {
+		logger.error(error);
+		return null;
+	}
+
+	if (!data.session) {
+		logger.error("Session does not exist");
+		return null;
+	}
+
+	return data.session
 }

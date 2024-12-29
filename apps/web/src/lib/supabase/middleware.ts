@@ -2,6 +2,8 @@ import { env } from "@/env";
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
+console.warn = () => { };
+
 const exactMatchRoutes = ["/", "/login"];
 
 const prefixMatchRoutes = ["/api/auth"];
@@ -48,9 +50,9 @@ export async function updateSession(request: NextRequest) {
 	// IMPORTANT: DO NOT REMOVE auth.getUser()
 
 	const {
-		data: { user },
+		data: { session },
 		error,
-	} = await supabase.auth.getUser();
+	} = await supabase.auth.getSession();
 
 	if (error && !isPublicRoute(request.nextUrl.pathname)) {
 		console.error(error);
@@ -59,7 +61,7 @@ export async function updateSession(request: NextRequest) {
 		return NextResponse.redirect(url);
 	}
 
-	if (!user && !isPublicRoute(request.nextUrl.pathname)) {
+	if (!session && !isPublicRoute(request.nextUrl.pathname)) {
 		console.error("No user found");
 		// no user, potentially respond by redirecting the user to the login page
 		const url = request.nextUrl.clone();

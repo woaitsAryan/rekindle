@@ -5,6 +5,8 @@
 		"build": "turbo run build",
 		"web:dev": "cd apps/web && bun run dev",
 		"web:build": "turbo run build --filter=web",
+		"backend:dev": "cd apps/backend && bun run dev",
+		"backend:build": "turbo run build --filter=backend",
 		"db:migrate:deploy": "turbo run db:migrate:deploy",
 		"db:push": "turbo run db:push",
 		"db:generate": "cd packages/db && bun run db:generate",

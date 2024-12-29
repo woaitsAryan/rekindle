@@ -1,4 +1,4 @@
-export type CreateGenericBody<T> = {
+export type CreateGenericJson<T> = {
 	in: {
 		json: T;
 	};
@@ -6,3 +6,12 @@ export type CreateGenericBody<T> = {
 		json: T;
 	};
 };
+
+export type CreateGenericQuery<T> = {
+	in: {
+		query: T;
+	};
+	out: {
+		query: T;
+	}
+}

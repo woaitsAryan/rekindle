@@ -4,9 +4,10 @@ import { HTTPException } from "hono/http-exception";
 import { supabase } from "../config/supabase-client";
 import { CONTEXT_VARIABLES } from "../config/constants";
 import { logger } from "../config/logger";
+import { APIHeaders } from "@rekindle/api-schema";
 
 const authMiddleware = createMiddleware<AuthenticatedEnv>(async (c, next) => {
-	const auth_token = c.req.header().authorization;
+	const auth_token = c.req.header(APIHeaders.SessionToken);
 	if (!auth_token) {
 		logger.error("Authorization header not set");
 		throw new HTTPException(401, { message: "Authorization header not set" });

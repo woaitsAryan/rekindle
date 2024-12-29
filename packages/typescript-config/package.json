@@ -1,8 +1,5 @@
 {
 	"name": "@rekindle/typescript-config",
-	"scripts": {
-		"build": "echo 'No build step'"
-	},
 	"private": true,
 	"license": "MIT",
 	"publishConfig": {

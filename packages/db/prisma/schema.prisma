@@ -46,6 +46,11 @@ model Completion {
 
   metadata Json
   tokens   Int
+
+	tombstonedAt Boolean?
+  tombstoned   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 enum MessageSender {
