@@ -11,6 +11,6 @@ if (process.env.NODE_ENV !== "production") global.prisma = prisma;
 
 export default prisma;
 
-export { PrismaClient }
+export { PrismaClient };
 
-export * as DB from './src/abstraction'
+export * as DB from "./src/abstraction";

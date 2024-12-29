@@ -1,6 +1,6 @@
-import prisma from '@rekindle/db';
-import { createScopedLogger } from '@rekindle/diagnostics';
-import type { Prisma } from '@prisma/client';
+import type { Prisma } from "@prisma/client";
+import prisma from "@rekindle/db";
+import { createScopedLogger } from "@rekindle/diagnostics";
 
 export class DatabaseQueryQueue {
 	private queries: Array<Prisma.PrismaPromise<any>>;
@@ -13,7 +13,7 @@ export class DatabaseQueryQueue {
 	public addQuery(query: Prisma.PrismaPromise<any>) {
 		this.queries.push(query);
 		if (this.queries.length > 10) {
-			this.flushQueries()
+			this.flushQueries();
 		}
 	}
 
@@ -24,7 +24,7 @@ export class DatabaseQueryQueue {
 				await transaction;
 				this.logger.info(`Flushed ${this.queries.length} queries`);
 			} catch (error) {
-				this.logger.error('Transaction failed: ', error);
+				this.logger.error("Transaction failed: ", error);
 			}
 			this.queries = [];
 		}
@@ -35,7 +35,7 @@ export class DatabaseQueryQueue {
 	}
 }
 
-let DatabaseQueueInstance: DatabaseQueryQueue | null = null
+let DatabaseQueueInstance: DatabaseQueryQueue | null = null;
 
 export const getDBQueueInstance = (): DatabaseQueryQueue => {
 	if (!DatabaseQueueInstance) {
@@ -43,6 +43,6 @@ export const getDBQueueInstance = (): DatabaseQueryQueue => {
 		DatabaseQueueInstance.start();
 	}
 	return DatabaseQueueInstance;
-}
+};
 
-export const dbQueue = getDBQueueInstance()
+export const dbQueue = getDBQueueInstance();

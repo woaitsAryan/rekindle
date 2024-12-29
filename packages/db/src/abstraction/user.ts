@@ -1,11 +1,9 @@
-import prisma from '../..'
+import prisma from "../..";
 
 export class UserDataService {
 	private get db() {
-		return prisma.user
+		return prisma.user;
 	}
 
-	async create(data: unknown) {
-
-	}
+	async create(data: unknown) {}
 }

@@ -1,14 +1,14 @@
-import { z } from 'zod'
-import { CompletionMetadata } from './common'
+import { z } from "zod";
+import { CompletionMetadata } from "./common";
 
 export const CreateCompletionDto = z.object({
 	tokens: z.number(),
 	metadata: CompletionMetadata,
-	memoryId: z.string()
-})
+	memoryId: z.string(),
+});
 
-export type CreateCompletionType = z.infer<typeof CreateCompletionDto>
+export type CreateCompletionType = z.infer<typeof CreateCompletionDto>;
 
-export function validateCreateCompletion(data: unknown){
-	return CreateCompletionDto.parse(data)
+export function validateCreateCompletion(data: unknown) {
+	return CreateCompletionDto.parse(data);
 }

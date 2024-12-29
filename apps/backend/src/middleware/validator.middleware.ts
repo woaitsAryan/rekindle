@@ -14,8 +14,8 @@ export const zValidator = (
 			const formattedError = fromZodError(result.error, {
 				maxIssuesInMessage: 1,
 				prefix: null,
-				includePath: true
-			})
+				includePath: true,
+			});
 			throw new HTTPException(400, { message: formattedError.toString() });
 		}
 	});

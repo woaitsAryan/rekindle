@@ -22,8 +22,8 @@ export default function ClientComponent(props: ClientComponentProps) {
 			console.log("wtf", props);
 		},
 		async onResponse(props) {
-			console.log("sigh", props)
-		}
+			console.log("sigh", props);
+		},
 	});
 
 	return (

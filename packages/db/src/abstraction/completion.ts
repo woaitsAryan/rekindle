@@ -1,11 +1,14 @@
-import prisma from '../..'
-import type { CreateCompletionType, UpsertMemoryType } from '@rekindle/api-schema/validation'
-import type { Completion } from '../types'
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from "@prisma/client";
+import type {
+	CreateCompletionType,
+	UpsertMemoryType,
+} from "@rekindle/api-schema/validation";
+import prisma from "../..";
+import type { Completion } from "../types";
 
 export class CompletionDataService {
 	private get db() {
-		return prisma.completion
+		return prisma.completion;
 	}
 
 	create(data: CreateCompletionType): Prisma.PrismaPromise<Completion> {
@@ -13,8 +16,8 @@ export class CompletionDataService {
 			data: {
 				tokens: data.tokens,
 				metadata: data.metadata,
-				memoryId: data.memoryId
-			}
-		})
+				memoryId: data.memoryId,
+			},
+		});
 	}
 }

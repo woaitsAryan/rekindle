@@ -6,7 +6,7 @@ init_env();
 
 const app = new Hono();
 
-loadServer(app)
+loadServer(app);
 
 export default {
 	port: ENV.PORT,

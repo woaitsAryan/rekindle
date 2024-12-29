@@ -1,16 +1,15 @@
-import OpenAI from 'openai'
-import { ENV } from './env'
-import type { ChatCompletionCreateParamsStreaming } from 'openai/resources/index.mjs'
+import OpenAI from "openai";
+import type { ChatCompletionCreateParamsStreaming } from "openai/resources/index.mjs";
+import { ENV } from "./env";
 
 export const client = new OpenAI({
-	apiKey: ENV.OPENAI_API_KEY
-})
+	apiKey: ENV.OPENAI_API_KEY,
+});
 
 export const openAIConfig = {
-	model: 'gpt-4o-mini',
+	model: "gpt-4o-mini",
 	stream: true,
 	stream_options: {
-		include_usage: true
-	}
-} satisfies Omit<ChatCompletionCreateParamsStreaming, 'messages'>
-
+		include_usage: true,
+	},
+} satisfies Omit<ChatCompletionCreateParamsStreaming, "messages">;

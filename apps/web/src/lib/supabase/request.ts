@@ -1,8 +1,8 @@
 import { env } from "@/env";
+import { APIHeaders } from "@rekindle/api-schema";
 import type { z } from "zod";
 import { logger } from "../logger";
 import { createClient } from "./server";
-import { APIHeaders } from '@rekindle/api-schema'
 
 export const getAccessToken = async () => {
 	const supabase = await createClient();
@@ -34,8 +34,8 @@ export class SupabaseAPI {
 		params?: Record<string, string>,
 		validator?: T,
 	): Promise<z.infer<T>> {
-		if (!this.access_token){
-			throw new Error("Access token not found")
+		if (!this.access_token) {
+			throw new Error("Access token not found");
 		}
 		const response = await fetch(
 			`${env.NEXT_PUBLIC_BACKEND_URL}${path}${params ? `?${new URLSearchParams(params)}` : ""}`,
@@ -62,7 +62,7 @@ export class SupabaseAPI {
 		validator?: T,
 	): Promise<z.infer<T>> {
 		if (!this.access_token) {
-			throw new Error("Access token not found")
+			throw new Error("Access token not found");
 		}
 		const response = await fetch(
 			`${env.NEXT_PUBLIC_BACKEND_URL}${path}${params ? `?${new URLSearchParams(params)}` : ""}`,

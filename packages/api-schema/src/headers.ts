@@ -1,4 +1,3 @@
 export namespace APIHeaders {
-	export const SessionToken = 'x-session-token';
-	
+	export const SessionToken = "x-session-token";
 }

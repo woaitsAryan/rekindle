@@ -13,5 +13,5 @@ export type CreateGenericQuery<T> = {
 	};
 	out: {
 		query: T;
-	}
-}
+	};
+};

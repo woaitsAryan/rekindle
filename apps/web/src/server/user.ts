@@ -1,10 +1,10 @@
 "use server";
+import { logger } from "@/lib/logger";
 import { createClient } from "@/lib/supabase/server";
 import prisma from "@rekindle/db";
-import { logger } from "@/lib/logger";
 import type { User } from "@supabase/supabase-js";
 
-console.warn = () => { };
+console.warn = () => {};
 
 export async function upsertUser(user: User) {
 	if (!user.email) {
@@ -34,7 +34,7 @@ export async function upsertUser(user: User) {
 			id: user.id,
 			email: user.email,
 			metadata: user.user_metadata,
-			name: user.user_metadata.full_name
+			name: user.user_metadata.full_name,
 		},
 	});
 	return newUser;
@@ -84,5 +84,5 @@ export async function getUserSession() {
 		return null;
 	}
 
-	return data.session
+	return data.session;
 }

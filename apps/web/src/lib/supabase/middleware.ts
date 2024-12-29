@@ -2,7 +2,7 @@ import { env } from "@/env";
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
-console.warn = () => { };
+console.warn = () => {};
 
 const exactMatchRoutes = ["/", "/login"];
 
