@@ -1,18 +1,15 @@
 import type { UpsertMemoryType } from '@rekindle/api-schema/validation'
 import prisma from '../..'
 import type { Memory } from '../types'
+import type { Prisma } from '@prisma/client'
 
 export class MemoryDataService {
 	private get db() {
 		return prisma.memory
 	}
 
-	async create(data: unknown) {
-
-	}
-	
-	async upsert(data: UpsertMemoryType): Promise<Memory> {
-		return await this.db.upsert({
+	upsert(data: UpsertMemoryType): Prisma.PrismaPromise<Memory> {
+		return this.db.upsert({
 			where: {
 				id: data.id
 			},

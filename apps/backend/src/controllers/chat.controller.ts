@@ -8,7 +8,7 @@ import { stream } from 'hono/streaming'
 import prisma, { DB } from '@rekindle/db'
 import { dbQueue } from "@/helpers/queue";
 import type { CreateGenericBody } from "@rekindle/api-schema/utils";
-import type { ChatBody } from "@rekindle/api-schema/validation";
+import { validateCreateCompletion, type ChatBody } from "@rekindle/api-schema/validation";
 
 export const handleChatCompletion = async (
 	c: Context<AuthenticatedEnv, string, CreateGenericBody<ChatBody>>,
@@ -41,16 +41,12 @@ export const handleChatCompletion = async (
 				await stream.write(`0:${JSON.stringify(content)}\n`);
 			} else {
 				if (chunk.usage) {
-					const completion = prisma.completion.create({
-						data: {
-							tokens: chunk.usage.total_tokens,
-							metadata: chunk as object,
-							memoryId: memory.id
-						}
-					})
-
+					const completion = DB.completion.create(validateCreateCompletion({
+						tokens: chunk.usage.total_tokens,
+						memoryId: memory.id,
+						metadata: chunk
+					}))
 					dbQueue.addQuery(completion)
-					console.log(chunk)
 				}
 			}
 		}

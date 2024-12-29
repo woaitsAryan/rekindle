@@ -6,3 +6,15 @@ export const ChatMessages = z.array(
 		role: z.enum(["system", "user", "assistant"]),
 	})
 )
+
+export const CompletionMetadata = z.object({
+	id: z.string(),
+	created: z.number(),
+	model: z.string(),
+	object: z.enum(['chat.completion.chunk']),
+	usage: z.object({
+		completion_tokens: z.number(),
+		prompt_tokens: z.number(),
+		total_tokens: z.number(),
+	})
+})
