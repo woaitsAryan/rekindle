@@ -23,13 +23,14 @@ model User {
 }
 
 model Memory {
-  id      String @id @default(uuid())
+  id      String @id @unique
   content String
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  messages Message[]
+  messages    Json[]
+  completions Completion[]
 
   tombstonedAt Boolean?
   tombstoned   Boolean  @default(false)
@@ -37,19 +38,14 @@ model Memory {
   updatedAt    DateTime @updatedAt
 }
 
-model Message {
+model Completion {
   id String @id @default(uuid())
 
-  memory   Memory @relation(fields: [memoryId], references: [id], onDelete: Cascade)
   memoryId String
+  memory   Memory @relation(fields: [memoryId], references: [id], onDelete: Cascade)
 
-  sender  MessageSender
-  content String
-
-  tombstoned   Boolean  @default(false)
-  tombstonedAt Boolean?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  metadata Json
+  tokens   Int
 }
 
 enum MessageSender {

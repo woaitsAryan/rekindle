@@ -6,16 +6,24 @@ import { useChat } from "ai/react";
 import { useState } from "react";
 
 interface ClientComponentProps {
-	session: Session
+	session: Session;
+	id: string;
 }
 
 export default function ClientComponent(props: ClientComponentProps) {
-
 	const { messages, input, setInput, append } = useChat({
-		api: `${env.BACKEND_URL}/chat`,
+		api: "http://localhost:8000/chat",
 		headers: {
-			'authorization' : props.session.access_token
-		}
+			authorization: props.session.access_token,
+		},
+		id: props.id,
+		body: { id: props.id },
+		async onError(props) {
+			console.log("wtf", props);
+		},
+		async onResponse(wtf) {
+			console.log("sigh", wtf);
+		},
 	});
 
 	return (

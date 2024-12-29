@@ -1,14 +1,9 @@
 import { z } from "zod";
+import { ChatMessages } from "./common";
 
 export const ChatBodySchema = z.object({
-	messages: z.array(
-		z.object({
-			content: z.string(),
-			role: z.enum(["system", "user", "assistant"]),
-		}),
-	),
+	messages: ChatMessages,
+	id: z.string()
 });
-
-
 
 export type ChatBody = z.infer<typeof ChatBodySchema>;

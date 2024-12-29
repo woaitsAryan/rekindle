@@ -1,22 +1,62 @@
 import { CONTEXT_VARIABLES } from "@/config/constants";
+import { logger } from "@/config/logger";
+import { client, openAIConfig } from "@/config/openai";
 import { system_prompt } from "@/config/templates";
 import type { AuthenticatedEnv } from "@/types/variable";
-import { openai } from "@ai-sdk/openai";
-import type { ChatBody, CreateGenericBody } from "@rekindle/api-schema";
-import { streamText } from "ai";
 import type { Context, Env } from "hono";
+import { stream } from 'hono/streaming'
+import prisma, { DB } from '@rekindle/db'
+import { dbQueue } from "@/helpers/queue";
+import type { CreateGenericBody } from "@rekindle/api-schema/utils";
+import type { ChatBody } from "@rekindle/api-schema/validation";
 
 export const handleChatCompletion = async (
 	c: Context<AuthenticatedEnv, string, CreateGenericBody<ChatBody>>,
 ) => {
 	const user = c.get(CONTEXT_VARIABLES.User);
-	const input_messages = c.req.valid("json").messages;
+	const { messages, id } = c.req.valid("json");
 
-	const result = streamText({
-		model: openai('gpt-4o-mini'),
-		messages: input_messages,
-		system: system_prompt,
+	const memory = await DB.memory.upsert({
+		id,
+		userId: user.id,
+		messages
+	})
+
+	const streamingResponse = await client.chat.completions.create({
+		messages: [
+			{ 'role': 'system', 'content': system_prompt },
+			...messages
+		],
+		...openAIConfig
+	})
+
+	return stream(c, async (stream) => {
+		stream.onAbort(() => {
+			logger.debug('Client disconnected from chat stream');
+		});
+
+		for await (const chunk of streamingResponse) {
+			const content = chunk.choices[0]?.delta?.content || '';
+			if (content) {
+				await stream.write(`0:${JSON.stringify(content)}\n`);
+			} else {
+				if (chunk.usage) {
+					const completion = prisma.completion.create({
+						data: {
+							tokens: chunk.usage.total_tokens,
+							metadata: chunk as object,
+							memoryId: memory.id
+						}
+					})
+
+					dbQueue.addQuery(completion)
+					console.log(chunk)
+				}
+			}
+		}
+
+		await stream.write(`d:${JSON.stringify({
+			finishReason: "stop"
+		})}\n`);
 	});
-
-	return result.toDataStreamResponse();
 };

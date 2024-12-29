@@ -6,6 +6,11 @@
 	"scripts": {
 		"build": "bun build index.ts --outdir dist --target bun"
 	},
+	"exports": {
+		".": "./index.ts",
+		"./validation": "./src/validation/index.ts",
+		"./utils": "./src/utils/index.ts"
+	},
 	"dependencies": {
 		"@rekindle/db": "*",
 		"zod": "^3.24.1"

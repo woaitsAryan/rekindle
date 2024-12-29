@@ -12,15 +12,6 @@ export async function upsertUser(user: User) {
 		throw new Error("No email found");
 	}
 
-	const validatedProvider = isValidEnumValue(
-		enums.Providers,
-		user.app_metadata.provider,
-	);
-	if (!validatedProvider) {
-		logger.error("Unsupported provider");
-		throw new Error("Unsupported provider");
-	}
-
 	const existingUser = await prisma.user.findFirst({
 		where: {
 			OR: [
@@ -29,7 +20,6 @@ export async function upsertUser(user: User) {
 				},
 				{
 					email: user.email,
-					provider: validatedProvider,
 				},
 			],
 		},
@@ -43,8 +33,8 @@ export async function upsertUser(user: User) {
 		data: {
 			id: user.id,
 			email: user.email,
-			provider: validatedProvider,
 			metadata: user.user_metadata,
+			name: user.user_metadata.full_name
 		},
 	});
 	return newUser;

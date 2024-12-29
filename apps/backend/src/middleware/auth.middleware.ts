@@ -1,8 +1,7 @@
 import type { AuthenticatedEnv } from "@/types/variable";
-import type { User } from "@supabase/supabase-js";
 import { createMiddleware } from "hono/factory";
 import { HTTPException } from "hono/http-exception";
-import { supabase } from "../config/client";
+import { supabase } from "../config/supabase-client";
 import { CONTEXT_VARIABLES } from "../config/constants";
 import { logger } from "../config/logger";
 
