@@ -34,7 +34,7 @@ export class SupabaseAPI {
 		validator?: T,
 	): Promise<z.infer<T>> {
 		const response = await fetch(
-			`${env.BACKEND_URL}${path}${params ? `?${new URLSearchParams(params)}` : ""}`,
+			`${env.NEXT_PUBLIC_BACKEND_URL}${path}${params ? `?${new URLSearchParams(params)}` : ""}`,
 			{
 				headers: {
 					Authorization: `${this.access_token}`,
@@ -58,7 +58,7 @@ export class SupabaseAPI {
 		validator?: T,
 	): Promise<z.infer<T>> {
 		const response = await fetch(
-			`${env.BACKEND_URL}${path}${params ? `?${new URLSearchParams(params)}` : ""}`,
+			`${env.NEXT_PUBLIC_BACKEND_URL}${path}${params ? `?${new URLSearchParams(params)}` : ""}`,
 			{
 				method: "POST",
 				headers: {
