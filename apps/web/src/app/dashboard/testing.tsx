@@ -1,9 +1,11 @@
 "use client";
 
 import { env } from "@/env";
+import { logger } from "@/lib/logger";
 import { APIHeaders } from "@rekindle/api-schema";
 import type { Session } from "@supabase/supabase-js";
 import { useChat } from "ai/react";
+import { toast } from "sonner";
 
 interface ClientComponentProps {
 	session: Session;
@@ -18,11 +20,9 @@ export default function ClientComponent(props: ClientComponentProps) {
 		},
 		id: props.id,
 		body: { id: props.id },
-		async onError(props) {
-			console.log("wtf", props);
-		},
-		async onResponse(props) {
-			console.log("sigh", props);
+		onError(error: Error) {
+			logger.error(error)
+			toast.error(error.message)
 		},
 	});
 
