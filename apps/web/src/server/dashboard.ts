@@ -5,8 +5,8 @@ import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 
 export async function makeRequest() {
-	const access_token = await getAccessToken();
-	const api = new SupabaseAPI(access_token);
+	const api = new SupabaseAPI();
+	await api.init()
 
 	const inputBody = {
 		messages: [

@@ -9,6 +9,7 @@ import {
 } from "@rekindle/api-schema/validation";
 import type { Context, Hono } from "hono";
 import { handleGlobalError } from "./error";
+import { APIRoutes } from "@rekindle/api-schema";
 
 export default function setupRoutes(app: Hono) {
 	app.get("/", (c) => c.text("Hello world!"));
@@ -17,10 +18,10 @@ export default function setupRoutes(app: Hono) {
 
 	app.use("*", usageMiddleware);
 
-	app.post("/chat", zValidator("json", ChatBodySchema), handleChatCompletion);
+	app.post(APIRoutes.chat.completon, zValidator("json", ChatBodySchema), handleChatCompletion);
 
-	app.get("/memory", zValidator("query", PaginationQuery), getAllMemories);
-	app.get("/memory/:memoryId", getMemory);
+	app.get(APIRoutes.memory.getAll, zValidator("query", PaginationQuery), getAllMemories);
+	app.get(APIRoutes.memory.get, getMemory);
 
 	app.notFound((c: Context) =>
 		c.json({ message: "Not found", success: false }, 404),

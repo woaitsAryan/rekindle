@@ -18,6 +18,7 @@ export class MemoryDataService {
 		return this.db.findMany({
 			where: {
 				userId: data.userId,
+				tombstoned: false
 			},
 			take: data.limit,
 			skip,
@@ -29,6 +30,7 @@ export class MemoryDataService {
 			where: {
 				userId: data.userId,
 				id: data.memoryId,
+				tombstoned: false
 			},
 		});
 	}
@@ -37,6 +39,7 @@ export class MemoryDataService {
 		return this.db.upsert({
 			where: {
 				id: data.id,
+				tombstoned: false
 			},
 			create: {
 				id: data.id,

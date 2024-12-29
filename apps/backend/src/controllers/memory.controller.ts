@@ -1,5 +1,6 @@
 import { CONTEXT_VARIABLES } from "@/config/constants";
 import type { AuthenticatedEnv } from "@/types/variable";
+import type { APIRoutes } from "@rekindle/api-schema";
 import type { CreateGenericQuery } from "@rekindle/api-schema/utils";
 import type { PaginationQueryType } from "@rekindle/api-schema/validation";
 import { DB } from "@rekindle/db";
@@ -9,7 +10,7 @@ import { HTTPException } from "hono/http-exception";
 export const getAllMemories = async (
 	c: Context<
 		AuthenticatedEnv,
-		"/memory",
+		APIRoutes.memory.getAll,
 		CreateGenericQuery<PaginationQueryType>
 	>,
 ) => {
@@ -28,7 +29,7 @@ export const getAllMemories = async (
 };
 
 export const getMemory = async (
-	c: Context<AuthenticatedEnv, "/memory/:memoryId">,
+	c: Context<AuthenticatedEnv, APIRoutes.memory.get>,
 ) => {
 	const user = c.get(CONTEXT_VARIABLES.User);
 	const memoryId = c.req.param("memoryId");

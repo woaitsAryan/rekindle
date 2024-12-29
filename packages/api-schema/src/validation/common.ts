@@ -20,8 +20,8 @@ export const CompletionMetadata = z.object({
 });
 
 export const PaginationQuery = z.object({
-	page: z.string().transform(Number).pipe(z.number().int()),
-	limit: z.string().transform(Number).pipe(z.number().int()),
+	page: z.string().default("1").transform(Number).pipe(z.number().int()),
+	limit: z.string().default("20").transform(Number).pipe(z.number().int()),
 });
 
 export type PaginationQueryType = z.infer<typeof PaginationQuery>;

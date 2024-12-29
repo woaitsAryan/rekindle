@@ -23,10 +23,11 @@ export const getAccessToken = async () => {
 };
 
 export class SupabaseAPI {
-	access_token: string | null = null;
+	private access_token: string | null = null;
 
-	constructor(access_token: string) {
-		this.access_token = access_token;
+	async init() {
+		const access_token = await getAccessToken()
+		this.access_token = access_token
 	}
 
 	async GET<T extends z.ZodType>(
@@ -84,4 +85,15 @@ export class SupabaseAPI {
 
 		return data;
 	}
+}
+
+let SupabaseAPISingleton: SupabaseAPI | null = null
+
+export async function getAPI(): Promise<SupabaseAPI> {
+	if (!SupabaseAPISingleton) {
+		const api = new SupabaseAPI()
+		await api.init()
+		SupabaseAPISingleton = api
+	}
+	return SupabaseAPISingleton
 }
