@@ -18,3 +18,5 @@ export const CompletionMetadata = z.object({
 		total_tokens: z.number(),
 	})
 })
+
+export type CompletionMetadataType = z.infer<typeof CompletionMetadata>

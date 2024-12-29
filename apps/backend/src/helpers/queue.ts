@@ -22,7 +22,7 @@ export class DatabaseQueryQueue {
 			const transaction = prisma.$transaction(this.queries);
 			try {
 				await transaction;
-				this.logger.info('Flushed %d queries', this.queries.length);
+				this.logger.info(`Flushed ${this.queries.length} queries`);
 			} catch (error) {
 				this.logger.error('Transaction failed: ', error);
 			}

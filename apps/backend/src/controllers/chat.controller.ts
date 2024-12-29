@@ -3,12 +3,12 @@ import { logger } from "@/config/logger";
 import { client, openAIConfig } from "@/config/openai";
 import { system_prompt } from "@/config/templates";
 import type { AuthenticatedEnv } from "@/types/variable";
-import type { Context, Env } from "hono";
+import type { Context } from "hono";
 import { stream } from 'hono/streaming'
-import prisma, { DB } from '@rekindle/db'
+import { DB } from '@rekindle/db'
 import { dbQueue } from "@/helpers/queue";
 import type { CreateGenericBody } from "@rekindle/api-schema/utils";
-import { validateCreateCompletion, type ChatBody } from "@rekindle/api-schema/validation";
+import type { ChatBody, CompletionMetadataType } from "@rekindle/api-schema/validation";
 
 export const handleChatCompletion = async (
 	c: Context<AuthenticatedEnv, string, CreateGenericBody<ChatBody>>,
@@ -41,11 +41,11 @@ export const handleChatCompletion = async (
 				await stream.write(`0:${JSON.stringify(content)}\n`);
 			} else {
 				if (chunk.usage) {
-					const completion = DB.completion.create(validateCreateCompletion({
+					const completion = DB.completion.create({
 						tokens: chunk.usage.total_tokens,
 						memoryId: memory.id,
-						metadata: chunk
-					}))
+						metadata: chunk.usage as unknown as CompletionMetadataType
+					})
 					dbQueue.addQuery(completion)
 				}
 			}
