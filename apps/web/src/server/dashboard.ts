@@ -1,8 +1,6 @@
 "use server";
 
-import { SupabaseAPI, getAccessToken } from "@/lib/supabase/request";
-import { createClient } from "@/lib/supabase/server";
-import { cookies } from "next/headers";
+import { SupabaseAPI } from "@/lib/supabase/request";
 
 export async function makeRequest() {
 	const api = new SupabaseAPI();
