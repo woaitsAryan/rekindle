@@ -17,15 +17,14 @@
 		"./types": "./src/types/index.ts"
 	},
 	"dependencies": {
-		"@rekindle/api-schema": "*",
 		"@prisma/client": "^6.1.0",
 		"prisma": "^6.1.0"
 	},
 	"peerDependencies": {
-		"@rekindle/typescript-config": "*"
+		"@rekindle/api-schema": "workspace:*",
+		"@rekindle/typescript-config": "workspace:*"
 	},
 	"devDependencies": {
-		"@rekindle/typescript-config": "*",
 		"@types/bun": "^1.1.6",
 		"typescript": "^5"
 	}

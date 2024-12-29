@@ -1,7 +1,6 @@
 "use client";
 
 import { env } from "@/env";
-import { logger } from "@/lib/logger";
 import { APIHeaders } from "@rekindle/api-schema";
 import type { Session } from "@supabase/supabase-js";
 import { useChat } from "ai/react";
@@ -21,7 +20,6 @@ export default function ClientComponent(props: ClientComponentProps) {
 		id: props.id,
 		body: { id: props.id },
 		onError(error: Error) {
-			logger.error(error)
 			toast.error(error.message)
 		},
 	});

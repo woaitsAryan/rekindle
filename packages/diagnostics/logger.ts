@@ -1,4 +1,3 @@
-import util from "node:util";
 import { createLogger, format, transports } from "winston";
 
 export type LogLevel = "error" | "warn" | "info" | "debug" | "trace";
@@ -12,7 +11,7 @@ export function createScopedLogger(scope: string, level: LogLevel = "debug") {
 			format.printf(({ level, message }) => {
 				const formattedMessage =
 					typeof message === "object"
-						? util.inspect(message, { depth: null, colors: true })
+						? JSON.stringify(message, null, 2)
 						: message;
 
 				return `${level} [${scope}]: ${formattedMessage}`;

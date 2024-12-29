@@ -15,7 +15,7 @@
 		"zod": "^3.24.1"
 	},
 	"peerDependencies": {
-		"@rekindle/typescript-config": "*"
+		"@rekindle/typescript-config": "workspace:*"
 	},
 	"devDependencies": {
 		"typescript": "^5"

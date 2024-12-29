@@ -7,6 +7,7 @@
 		"web:build": "turbo run build --filter=web",
 		"backend:dev": "cd apps/backend && bun run dev",
 		"backend:build": "turbo run build --filter=backend",
+		"backend:start": "cd apps/backend && bun run start",
 		"db:migrate:deploy": "turbo run db:migrate:deploy",
 		"db:push": "turbo run db:push",
 		"db:generate": "cd packages/db && bun run db:generate",
@@ -21,7 +22,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
-		"@rekindle/typescript-config": "*",
+		"@rekindle/typescript-config": "workspace:*",
 		"turbo": "^2.3.3"
 	},
 	"engines": {
