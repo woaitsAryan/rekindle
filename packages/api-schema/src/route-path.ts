@@ -1,9 +1,9 @@
 export namespace APIRoutes {
-	export enum memory {
-		getAll = "/memory",
-		get = "/memory/:memoryId"
+	export enum Memory {
+		GetAll = "/v1/memory",
+		Get = "/v1/memory/:memoryId"
 	}
-	export enum chat {
-		completon = "/chat"
+	export enum Chat {
+		Completon = "/v1/chat"
 	}
 }

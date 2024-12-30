@@ -9,9 +9,9 @@ const app = new Hono();
 
 loadServer(app);
 
-logger.info(`Started server on port ${ENV.PORT}!`)
+logger.info(`Started server on port ${ENV.BACKEND_PORT}!`)
 
 export default {
-	port: ENV.PORT,
+	port: ENV.BACKEND_PORT,
 	fetch: app.fetch,
 };

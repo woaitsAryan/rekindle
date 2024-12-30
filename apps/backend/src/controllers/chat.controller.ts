@@ -15,7 +15,7 @@ import type { Context } from "hono";
 import { stream } from "hono/streaming";
 
 export const handleChatCompletion = async (
-	c: Context<AuthenticatedEnv, APIRoutes.chat.completon , CreateGenericJson<ChatBody>>,
+	c: Context<AuthenticatedEnv, APIRoutes.Chat.Completon, CreateGenericJson<ChatBody>>,
 ) => {
 	const user = c.get(CONTEXT_VARIABLES.User);
 	const { messages, id } = c.req.valid("json");

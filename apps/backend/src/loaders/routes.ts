@@ -12,17 +12,17 @@ import { handleGlobalError } from "./error";
 import { APIRoutes } from "@rekindle/api-schema";
 
 export default function setupRoutes(app: Hono) {
-	app.get("/", (c) => c.text("Hello world!"));
+	app.get("/", (c) => { return c.text("Hello world!") });
 	app.all("/ping", (c) => c.text("Pong!"))
 
-	app.use("*", authMiddleware);
+	app.use("/v1/*", authMiddleware);
 
-	app.use("*", usageMiddleware);
+	app.use("/v1/*", usageMiddleware);
 
-	app.post(APIRoutes.chat.completon, zValidator("json", ChatBodySchema), handleChatCompletion);
+	app.post(APIRoutes.Chat.Completon, zValidator("json", ChatBodySchema), handleChatCompletion);
 
-	app.get(APIRoutes.memory.getAll, zValidator("query", PaginationQuery), getAllMemories);
-	app.get(APIRoutes.memory.get, getMemory);
+	app.get(APIRoutes.Memory.GetAll, zValidator("query", PaginationQuery), getAllMemories);
+	app.get(APIRoutes.Memory.Get, getMemory);
 
 	app.notFound((c: Context) =>
 		c.json({ message: "Not found", success: false }, 404),

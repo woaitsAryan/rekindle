@@ -10,7 +10,7 @@ import { HTTPException } from "hono/http-exception";
 export const getAllMemories = async (
 	c: Context<
 		AuthenticatedEnv,
-		APIRoutes.memory.getAll,
+		APIRoutes.Memory.GetAll,
 		CreateGenericQuery<PaginationQueryType>
 	>,
 ) => {
@@ -29,7 +29,7 @@ export const getAllMemories = async (
 };
 
 export const getMemory = async (
-	c: Context<AuthenticatedEnv, APIRoutes.memory.get>,
+	c: Context<AuthenticatedEnv, APIRoutes.Memory.Get>,
 ) => {
 	const user = c.get(CONTEXT_VARIABLES.User);
 	const memoryId = c.req.param("memoryId");

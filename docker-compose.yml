@@ -10,7 +10,7 @@ services:
       dockerfile: backend.Dockerfile
     restart: always
     ports:
-      - ${PORT}:${PORT}
+      - ${BACKEND_PORT}:${BACKEND_PORT}
     # depends_on:
       # postgres:
       #   condition: service_healthy
@@ -20,7 +20,7 @@ services:
     networks:
       - api-network
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://127.0.0.1:${PORT}/ping"]
+      test: ["CMD", "wget", "--spider", "http://127.0.0.1:${BACKEND_PORT}/ping"]
       interval: 1m
       timeout: 5s
       retries: 3

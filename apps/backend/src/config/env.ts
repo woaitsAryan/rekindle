@@ -5,7 +5,7 @@ const envSchema = z.object({
 	OPENAI_API_KEY: z.string().min(1),
 	NEXT_PUBLIC_SUPABASE_URL: z.string().min(1),
 	NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
-	PORT: z.string().transform(Number),
+	BACKEND_PORT: z.string().transform(Number),
 });
 
 type EnvType = z.infer<typeof envSchema>;
