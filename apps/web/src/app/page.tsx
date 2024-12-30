@@ -5,6 +5,8 @@ import Footer from "@/components/landing/footer";
 import Hero from "@/components/landing/hero";
 import Navbar, { NavbarConfig } from "@/components/landing/navbar";
 
+console.log(process.env)
+
 export default function Home() {
 	return (
 		<div className="flex flex-col w-full max-w-maxw mx-auto gap-28">
