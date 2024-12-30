@@ -1,10 +1,9 @@
 "use server";
 
-import { SupabaseAPI } from "@/lib/supabase/request";
+import { getAPI } from "@/lib/supabase/request";
 
 export async function makeRequest() {
-	const api = new SupabaseAPI();
-	await api.init()
+	const api = await getAPI()
 
 	const inputBody = {
 		messages: [
@@ -15,7 +14,7 @@ export async function makeRequest() {
 		],
 	};
 
-	const um = await api.POST("/chat", inputBody);
+	const response = await api.POST("/chat", inputBody);
 
-	console.log(um);
+	console.log(response);
 }
