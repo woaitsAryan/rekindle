@@ -11,13 +11,24 @@ export class CompletionDataService {
 		return prisma.completion;
 	}
 
-	create(data: CreateCompletionType): Prisma.PrismaPromise<Completion> {
+	async create(data: CreateCompletionType): Promise<Completion> {
 		return this.db.create({
 			data: {
-				tokens: data.tokens,
+				totalTokens: data.tokens,
 				metadata: data.metadata,
 				memoryId: data.memoryId,
 			},
 		});
 	}
+
+	queueCreate(data: CreateCompletionType): Prisma.PrismaPromise<Completion> {
+		return this.db.create({
+			data: {
+				totalTokens: data.tokens,
+				metadata: data.metadata,
+				memoryId: data.memoryId
+			}
+		})
+	}
+
 }

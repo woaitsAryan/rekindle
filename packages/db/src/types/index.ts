@@ -8,5 +8,7 @@ type CommonFields = {
 };
 
 export type Memory = schema.Memory;
-export type User = schema.User;
+export type Customer = schema.Customer;
 export type Completion = schema.Completion;
+export type BilledPlan = schema.BilledPlan;
+export type BilledUsage = schema.BilledUsage;

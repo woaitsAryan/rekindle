@@ -3,15 +3,15 @@ import { ChatBodySchema } from "./chat";
 import { PaginationQuery } from "./common";
 
 export const UpsertMemoryDto = ChatBodySchema.extend({
-	userId: z.string(),
+	customerId: z.string(),
 });
 
 export const FindAllMemoryDto = PaginationQuery.extend({
-	userId: z.string(),
+	customerId: z.string(),
 });
 
 export const FindOneMemoryDto = z.object({
-	userId: z.string(),
+	customerId: z.string(),
 	memoryId: z.string(),
 });
 

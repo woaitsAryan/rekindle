@@ -3,6 +3,6 @@ import type { Env } from "hono";
 
 export interface AuthenticatedEnv extends Env {
 	Variables: {
-		user: User;
+		customer: User;
 	};
 }

@@ -14,10 +14,10 @@ export const getAllMemories = async (
 		CreateGenericQuery<PaginationQueryType>
 	>,
 ) => {
-	const user = c.get(CONTEXT_VARIABLES.User);
+	const customer = c.get(CONTEXT_VARIABLES.Customer);
 	const { page, limit } = c.req.valid("query");
 
-	const memories = await DB.memory.findAll({ userId: user.id, page, limit });
+	const memories = await DB.memory.findAll({ customerId: customer.id, page, limit });
 
 	return c.json(
 		{
@@ -31,10 +31,10 @@ export const getAllMemories = async (
 export const getMemory = async (
 	c: Context<AuthenticatedEnv, APIRoutes.Memory.Get>,
 ) => {
-	const user = c.get(CONTEXT_VARIABLES.User);
+	const customer = c.get(CONTEXT_VARIABLES.Customer);
 	const memoryId = c.req.param("memoryId");
 
-	const memory = await DB.memory.findOne({ userId: user.id, memoryId });
+	const memory = await DB.memory.findOne({ customerId: customer.id, memoryId });
 
 	if (!memory) {
 		throw new HTTPException(404, { message: "Memory not found" });

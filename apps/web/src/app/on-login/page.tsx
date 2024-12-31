@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { upsertUser } from "@/server/user";
+import { getCustomer } from "@/server/customer";
 import { redirect } from "next/navigation";
 
 export default async function OnLogin() {
@@ -10,7 +10,7 @@ export default async function OnLogin() {
 		redirect("/login");
 	}
 
-	await upsertUser(data.user);
+	await getCustomer(data.user);
 
 	redirect("/dashboard");
 }

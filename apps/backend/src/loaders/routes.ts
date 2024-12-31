@@ -12,7 +12,7 @@ import { handleGlobalError } from "./error";
 import { APIRoutes } from "@rekindle/api-schema";
 
 export default function setupRoutes(app: Hono) {
-	app.get("/", (c) => { return c.text("Hello world!") });
+	app.get("/", (c) => c.text("Hello world!"));
 	app.all("/ping", (c) => c.text("Pong!"))
 
 	app.use("/v1/*", authMiddleware);

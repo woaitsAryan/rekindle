@@ -8,7 +8,7 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model User {
+model Customer {
   id    String @id @unique
   email String @unique
   name  String
@@ -16,18 +16,57 @@ model User {
   metadata Json
   memories Memory[]
 
+  billedPlanId String
+  billedPlan   BilledPlan    @relation(fields: [billedPlanId], references: [id])
+  billedUsages BilledUsage[]
+
   tombstonedAt Boolean?
   tombstoned   Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
 
-model Memory {
-  id      String @id @unique
-  content String
+model BilledPlan {
+  id String @id @default(uuid())
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  name String
+  type PlanType @unique
+
+  usageLimit Int
+  rateLimit  Int
+
+  billingPeriod BillingPeriod
+
+  users Customer[]
+
+  tombstonedAt DateTime?
+  tombstoned   Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model BilledUsage {
+  id String @id @default(uuid())
+
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  periodStart DateTime
+  periodEnd   DateTime?
+
+  rawAmount Int @default(0)
+
+  tombstonedAt DateTime?
+  tombstoned   Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Memory {
+  id String @id @unique
+
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId String
 
   messages    Json[]
   completions Completion[]
@@ -44,10 +83,10 @@ model Completion {
   memoryId String
   memory   Memory @relation(fields: [memoryId], references: [id], onDelete: Cascade)
 
-  metadata Json
-  tokens   Int
+  metadata    Json
+  totalTokens Int
 
-	tombstonedAt Boolean?
+  tombstonedAt Boolean?
   tombstoned   Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -56,4 +95,17 @@ model Completion {
 enum MessageSender {
   USER
   BOT
+  ASSISTANT
+}
+
+enum PlanType {
+  PAID
+  FREE
+}
+
+enum BillingPeriod {
+  WEEKLY
+  MONTHLY
+  YEARLY
+	INFINITE
 }

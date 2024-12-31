@@ -7,7 +7,7 @@ import { interpretPath } from "@rekindle/api-schema/utils";
 export async function getAllMemories() {
 	const API = await getAPI()
 
-	const memories = await API.GET(APIRoutes.memory.getAll)
+	const memories = await API.GET(APIRoutes.Memory.GetAll)
 
 	return memories
 }
@@ -15,7 +15,7 @@ export async function getAllMemories() {
 export async function getMemory(memoryId: string) {
 	const API = await getAPI()
 
-	const path = interpretPath(APIRoutes.memory.get, { memoryId })
+	const path = interpretPath(APIRoutes.Memory.Get, { memoryId })
 
 	const memory = await API.GET(path)
 

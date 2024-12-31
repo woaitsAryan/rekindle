@@ -17,12 +17,12 @@ import { stream } from "hono/streaming";
 export const handleChatCompletion = async (
 	c: Context<AuthenticatedEnv, APIRoutes.Chat.Completon, CreateGenericJson<ChatBody>>,
 ) => {
-	const user = c.get(CONTEXT_VARIABLES.User);
+	const customer = c.get(CONTEXT_VARIABLES.Customer);
 	const { messages, id } = c.req.valid("json");
 
 	const memory = await DB.memory.upsert({
 		id,
-		userId: user.id,
+		customerId: customer.id,
 		messages,
 	});
 
@@ -42,7 +42,7 @@ export const handleChatCompletion = async (
 				await stream.write(`0:${JSON.stringify(content)}\n`);
 			} else {
 				if (chunk.usage) {
-					const completion = DB.completion.create({
+					const completion = DB.completion.queueCreate({
 						tokens: chunk.usage.total_tokens,
 						memoryId: memory.id,
 						metadata: chunk as unknown as CompletionMetadataType,

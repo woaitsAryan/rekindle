@@ -12,12 +12,12 @@ export class MemoryDataService {
 		return prisma.memory;
 	}
 
-	findAll(data: FindAllMemoryType): Prisma.PrismaPromise<Memory[]> {
+	async findAll(data: FindAllMemoryType): Promise<Memory[]> {
 		const skip = (data.page - 1) * data.limit;
 
 		return this.db.findMany({
 			where: {
-				userId: data.userId,
+				customerId: data.customerId,
 				tombstoned: false
 			},
 			take: data.limit,
@@ -25,17 +25,17 @@ export class MemoryDataService {
 		});
 	}
 
-	findOne(data: FindOneMemoryType): Prisma.PrismaPromise<Memory | null> {
+	async findOne(data: FindOneMemoryType): Promise<Memory | null> {
 		return this.db.findUnique({
 			where: {
-				userId: data.userId,
+				customerId: data.customerId,
 				id: data.memoryId,
 				tombstoned: false
 			},
 		});
 	}
 
-	upsert(data: UpsertMemoryType): Prisma.PrismaPromise<Memory> {
+	async upsert(data: UpsertMemoryType): Promise<Memory> {
 		return this.db.upsert({
 			where: {
 				id: data.id,
@@ -43,8 +43,7 @@ export class MemoryDataService {
 			},
 			create: {
 				id: data.id,
-				userId: data.userId,
-				content: data.messages[0]?.content ?? "",
+				customerId: data.customerId,
 				messages: data.messages,
 			},
 			update: {

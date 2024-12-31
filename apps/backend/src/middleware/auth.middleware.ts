@@ -25,7 +25,7 @@ const authMiddleware = createMiddleware<AuthenticatedEnv>(async (c, next) => {
 		throw new HTTPException(404, { message: response.error.message });
 	}
 
-	c.set(CONTEXT_VARIABLES.User, response.data.user);
+	c.set(CONTEXT_VARIABLES.Customer, response.data.user);
 	await next();
 });
 
