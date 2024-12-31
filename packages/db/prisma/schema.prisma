@@ -30,7 +30,7 @@ model BilledPlan {
   id String @id @default(uuid())
 
   name String
-  type PlanType @unique
+  type PlanType
 
   usageLimit Int
   rateLimit  Int
@@ -43,6 +43,8 @@ model BilledPlan {
   tombstoned   Boolean   @default(false)
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+
+	@@unique([type, billingPeriod])
 }
 
 model BilledUsage {

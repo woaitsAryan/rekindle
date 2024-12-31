@@ -22,7 +22,11 @@ export class BilledPlanDataService {
 	async findUnique(data: GetUniqueBilledPlanType): Promise<BilledPlan | null> {
 		return this.db.findUnique({
 			where: {
-				type: data.type
+				type_billingPeriod: {
+					type: data.type,
+					billingPeriod: data.billingPeriod,
+				},
+				tombstoned: false
 			}
 		})
 	}
@@ -30,7 +34,10 @@ export class BilledPlanDataService {
 	async upsert(data: UpsertBilledPlanType): Promise<BilledPlan> {
 		return this.db.upsert({
 			where: {
-				type: data.type,
+				type_billingPeriod: {
+					type: data.type,
+					billingPeriod: data.billingPeriod,
+				},
 				tombstoned: false
 			},
 			create: {

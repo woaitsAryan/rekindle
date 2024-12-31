@@ -19,7 +19,8 @@ export async function getCustomer(user: User) {
 	}
 
 	const freePlan = await DB.billedPlan.findUnique({
-		type: enums.PlanType.FREE
+		type: enums.PlanType.FREE,
+		billingPeriod: enums.BillingPeriod.INFINITE
 	})
 
 	if (!freePlan) {

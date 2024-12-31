@@ -1,23 +1,27 @@
 import { z } from "zod";
 
+export const BillingPeriodEnum = z.enum(["WEEKLY", "MONTHLY", "YEARLY", "INFINITE"])
+export const BillingPlanTypeEnum = z.enum(["PAID", "FREE"])
+
 export const CreateBilledPlanDto = z.object({
 	name: z.string(),
-	type: z.enum(["PAID", "FREE"]),
+	type: BillingPlanTypeEnum,
 	usageLimit: z.number().int(),
 	rateLimit: z.number().int(),
-	billingPeriod: z.enum(["WEEKLY", "MONTHLY", "YEARLY", "INFINITE"])
+	billingPeriod: BillingPeriodEnum
 })
 
 export const UpsertBilledPlanDto = z.object({
 	name: z.string(),
-	type: z.enum(["PAID", "FREE"]),
+	type: BillingPlanTypeEnum,
 	usageLimit: z.number().int(),
 	rateLimit: z.number().int(),
-	billingPeriod: z.enum(["WEEKLY", "MONTHLY", "YEARLY", "INFINITE"])
+	billingPeriod: BillingPeriodEnum
 })
 
 export const GetUniqueBilledPlanDto = z.object({
-	type: z.enum(["PAID", "FREE"])
+	type: BillingPlanTypeEnum,
+	billingPeriod: BillingPeriodEnum
 })
 
 export type CreateBilledPlanType = z.infer<typeof CreateBilledPlanDto>
