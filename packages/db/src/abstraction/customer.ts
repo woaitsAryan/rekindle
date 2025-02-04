@@ -1,4 +1,4 @@
-import type { FindUniqueCustomerType, UpsertCustomerType } from "@rekindle/api-schema/validation";
+import type { CreateCustomerType, FindUniqueCustomerType, UpsertCustomerType } from "@rekindle/api-schema/validation";
 import prisma from "../..";
 import type { Customer } from "../types";
 
@@ -7,14 +7,26 @@ export class CustomerDataService {
 		return prisma.customer;
 	}
 
+	async create(data: CreateCustomerType): Promise<Customer> {
+		return this.db.create({
+			data: {
+				id: data.customerId,
+				email: data.email,
+				metadata: data.metadata,
+				name: data.name,
+				billedPlanId: data.billedPlanId
+			}
+		})
+	}
+
 	async upsert(data: UpsertCustomerType): Promise<Customer> {
 		return this.db.upsert({
 			where: {
-				email: data.email,
+				id: data.customerId,
 				tombstoned: false
 			},
 			create: {
-				id: data.userId,
+				id: data.customerId,
 				email: data.email,
 				metadata: data.metadata,
 				name: data.name,
@@ -27,7 +39,7 @@ export class CustomerDataService {
 	async findUnique(data: FindUniqueCustomerType): Promise<Customer | null> {
 		return this.db.findUnique({
 			where: {
-				id: data.userId
+				id: data.customerId
 			}
 		})
 	}

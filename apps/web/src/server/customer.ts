@@ -1,7 +1,8 @@
 "use server";
+
 import { logger } from "@/lib/logger";
 import { createClient } from "@/lib/supabase/server";
-import prisma, { DB } from "@rekindle/db";
+import { DB } from "@rekindle/db";
 import type { User } from "@supabase/supabase-js";
 import { enums } from "@rekindle/db/enums"
 
@@ -18,6 +19,12 @@ export async function getCustomer(user: User) {
 		throw new Error("Full name not found")
 	}
 
+	const existingCustomer = await DB.customer.findUnique({
+		customerId: user.id
+	})
+
+	if (!existingCustomer) return existingCustomer
+
 	const freePlan = await DB.billedPlan.findUnique({
 		type: enums.PlanType.FREE,
 		billingPeriod: enums.BillingPeriod.INFINITE
@@ -28,15 +35,20 @@ export async function getCustomer(user: User) {
 		throw new Error("Free billed plan not found")
 	}
 
-	const customer = DB.customer.upsert({
+	const newCustomer = await DB.customer.create({
 		email: user.email,
-		userId: user.id,
+		customerId: user.id,
 		metadata: user.user_metadata,
 		name: user.user_metadata.full_name,
 		billedPlanId: freePlan.id
 	})
 
-	return customer;
+	await DB.billedUsage.create({
+		customerId: newCustomer.id,
+		periodStart: new Date(),
+	})
+
+	return newCustomer;
 }
 
 export async function getCustomerFromCookies() {
@@ -55,7 +67,7 @@ export async function getCustomerFromCookies() {
 	}
 
 	const existingCustomer = await DB.customer.findUnique({
-		userId: data.user.id
+		customerId: data.user.id
 	})
 
 	if (!existingCustomer) {

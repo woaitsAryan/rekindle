@@ -22,6 +22,8 @@ export const getAccessToken = async () => {
 	return session.data.session.access_token;
 };
 
+
+
 export class SupabaseAPI {
 	private access_token: string | null = null;
 

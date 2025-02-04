@@ -10,7 +10,7 @@ datasource db {
 
 model Customer {
   id    String @id @unique
-  email String @unique
+  email String 
   name  String
 
   metadata Json

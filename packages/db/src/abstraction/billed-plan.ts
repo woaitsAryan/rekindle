@@ -47,7 +47,11 @@ export class BilledPlanDataService {
 				rateLimit: data.rateLimit,
 				billingPeriod: data.billingPeriod
 			},
-			update: {}
+			update: {
+				usageLimit: data.usageLimit,
+				rateLimit: data.rateLimit,
+				name: data.name
+			}
 		})
 	}
 }

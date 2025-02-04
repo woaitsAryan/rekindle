@@ -17,9 +17,7 @@ export default function setupRoutes(app: Hono) {
 
 	app.use("/v1/*", authMiddleware);
 
-	app.use("/v1/*", usageMiddleware);
-
-	app.post(APIRoutes.Chat.Completon, zValidator("json", ChatBodySchema), handleChatCompletion);
+	app.post(APIRoutes.Chat.Completon, zValidator("json", ChatBodySchema), usageMiddleware, handleChatCompletion);
 
 	app.get(APIRoutes.Memory.GetAll, zValidator("query", PaginationQuery), getAllMemories);
 	app.get(APIRoutes.Memory.Get, getMemory);

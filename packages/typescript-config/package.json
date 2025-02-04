@@ -1,7 +1,6 @@
 {
 	"name": "@rekindle/typescript-config",
 	"private": true,
-	"license": "MIT",
 	"publishConfig": {
 		"access": "public"
 	}
