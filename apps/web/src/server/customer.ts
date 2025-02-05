@@ -23,7 +23,7 @@ export async function getCustomer(user: User) {
 		customerId: user.id
 	})
 
-	if (!existingCustomer) return existingCustomer
+	if (existingCustomer) return existingCustomer
 
 	const freePlan = await DB.billedPlan.findUnique({
 		type: enums.PlanType.FREE,

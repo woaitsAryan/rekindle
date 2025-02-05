@@ -14,7 +14,6 @@ export default async function DashboardWrapper() {
 
 	return (
 		<main>
-			<div>{JSON.stringify(user)}</div>
 			<ClientComponent session={session} id={id} />
 		</main>
 	);

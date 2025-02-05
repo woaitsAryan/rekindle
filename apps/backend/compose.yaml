@@ -1,0 +1,5 @@
+services:
+  feedback-backend:
+    build: .
+    ports:
+      - ${PORT}:${PORT}
