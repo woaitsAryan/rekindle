@@ -1,2 +1,2 @@
 export * from "./headers";
-export * from './route-path'
+export * from "./route-path";

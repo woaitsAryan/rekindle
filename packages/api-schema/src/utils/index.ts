@@ -1,2 +1,2 @@
-export * from './generics'
-export * from './path'
+export * from "./generics";
+export * from "./path";

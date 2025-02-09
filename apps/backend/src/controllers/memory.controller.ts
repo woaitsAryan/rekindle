@@ -17,7 +17,11 @@ export const getAllMemories = async (
 	const customer = c.get(CONTEXT_VARIABLES.Customer);
 	const { page, limit } = c.req.valid("query");
 
-	const memories = await DB.memory.findAll({ customerId: customer.id, page, limit });
+	const memories = await DB.memory.findAll({
+		customerId: customer.id,
+		page,
+		limit,
+	});
 
 	return c.json(
 		{

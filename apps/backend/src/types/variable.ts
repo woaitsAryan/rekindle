@@ -12,6 +12,6 @@ export interface AuthenticatedEnv extends Env {
 export interface BilledUsageEnv extends Env {
 	Variables: {
 		[CONTEXT_VARIABLES.BilledUsage]: BilledUsage;
-		[CONTEXT_VARIABLES.BilledPlan]: BilledPlan
-	}
-} 
+		[CONTEXT_VARIABLES.BilledPlan]: BilledPlan;
+	};
+}

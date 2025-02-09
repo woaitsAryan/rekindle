@@ -1,8 +1,8 @@
 "use client";
 
+import { useUserStore } from "@/lib/contexts/user.store";
 import { cn } from "@/lib/utils";
 import { Drama, HeartOff, type LucideIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -20,16 +20,15 @@ function SidebarLink({ link, pathname }: SidebarLinkProps) {
 		<Link href={link.link} key={link.link}>
 			<button
 				className={cn(
-					"flex items-center space-x-1 min-w-[160px] mb-1 p-3 hover:bg-white transition-colors rounded-xl border-2 border-transparent duration-200 hover:border-blue-500/80",
-					pathname?.includes(link.link) && "bg-white border-blue-500/80",
+					"flex items-center space-x-3 w-full mb-2 p-3 hover:bg-[#e3f2f9] transition-colors rounded-sm text-[#023047]",
+					pathname?.includes(link.link) && "bg-[#e3f2f9] font-medium",
 				)}
 				type="button"
 			>
-				<div className="flex items-center justify-center rounded-lg transition-colors">
-					<link.icon className="h-4 w-4 text-muted-foreground" />
-					<span className="sr-only">{link.title}</span>
+				<div className="flex items-center justify-center transition-colors">
+					<link.icon className="h-5 w-5" />
 				</div>
-				<span className="text-base px-1">{link.title}</span>
+				<span className="text-base font-inter">{link.title}</span>
 			</button>
 		</Link>
 	);
@@ -39,16 +38,13 @@ export function Sidebar() {
 	const pathname = usePathname();
 
 	return (
-		<aside className="sticky inset-y-0 left-0 top-0 z-10 hidden flex-col sm:flex bg-white/60 backdrop-blur-3xl w-48 px-2">
-			<nav className="flex flex-col items-start">
-				<Link
-					href="/"
-					className="h-20 w-40 transition-all group-hover:scale-110 flex justify-center items-center mb-2"
-				>
+		<aside className="sticky inset-y-0 left-0 top-0 z-10 hidden flex-col sm:flex bg-white w-64 border-r border-[#e3f2f9]">
+			<nav className="flex flex-col p-6">
+				<Link href="/" className="h-16 transition-all flex items-center mb-8">
 					{/* <Image width={130} height={20} src={"/logo.png"} alt="Logo" /> */}
 				</Link>
 
-				<div className="mt-2 font-geist">
+				<div className="space-y-2">
 					{sidebarLinks.map((link, index) => (
 						<SidebarLink
 							link={link}
@@ -72,13 +68,18 @@ export type SidebarLink = {
 
 export const sidebarLinks: SidebarLink[] = [
 	{
-		title: "Testing",
+		title: "Dashboard",
 		icon: Drama,
-		link: "/testing",
+		link: "/dashboard",
 	},
 	{
-		title: "Testing 2",
+		title: "Chat",
+		icon: Drama,
+		link: "/dashboard/chat",
+	},
+	{
+		title: "Memories",
 		icon: HeartOff,
-		link: "/testing2",
+		link: "/memories",
 	},
 ];

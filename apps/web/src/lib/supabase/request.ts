@@ -22,14 +22,12 @@ export const getAccessToken = async () => {
 	return session.data.session.access_token;
 };
 
-
-
 export class SupabaseAPI {
 	private access_token: string | null = null;
 
 	async init() {
-		const access_token = await getAccessToken()
-		this.access_token = access_token
+		const access_token = await getAccessToken();
+		this.access_token = access_token;
 	}
 
 	async GET<T extends z.ZodType>(
@@ -89,13 +87,13 @@ export class SupabaseAPI {
 	}
 }
 
-let SupabaseAPISingleton: SupabaseAPI | null = null
+let SupabaseAPISingleton: SupabaseAPI | null = null;
 
 export async function getAPI(): Promise<SupabaseAPI> {
 	if (!SupabaseAPISingleton) {
-		const api = new SupabaseAPI()
-		await api.init()
-		SupabaseAPISingleton = api
+		const api = new SupabaseAPI();
+		await api.init();
+		SupabaseAPISingleton = api;
 	}
-	return SupabaseAPISingleton
+	return SupabaseAPISingleton;
 }

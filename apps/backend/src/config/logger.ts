@@ -1,10 +1,10 @@
-import { createScopedLogger } from "@rekindle/diagnostics";
+import { createScopedLogger, LogScope } from "@rekindle/diagnostics";
 
 let loggerInstance: ReturnType<typeof createScopedLogger> | null = null;
 
 export const getLogger = () => {
 	if (!loggerInstance) {
-		loggerInstance = createScopedLogger("backend");
+		loggerInstance = createScopedLogger(LogScope.Backend);
 	}
 	return loggerInstance;
 };

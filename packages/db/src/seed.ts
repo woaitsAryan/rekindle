@@ -1,5 +1,5 @@
+import prisma, { DB } from "../index";
 import { enums } from "./enums";
-import prisma, { DB } from '../index'
 
 const BILLED_PLAN_CONFIGURATION = {
 	[enums.PlanType.FREE]: [
@@ -28,10 +28,10 @@ const BILLED_PLAN_CONFIGURATION = {
 
 async function main() {
 	try {
-		await prisma.$connect()
+		await prisma.$connect();
 
-		const freePlans = BILLED_PLAN_CONFIGURATION[enums.PlanType.FREE]
-		const paidPlans = BILLED_PLAN_CONFIGURATION[enums.PlanType.PAID]
+		const freePlans = BILLED_PLAN_CONFIGURATION[enums.PlanType.FREE];
+		const paidPlans = BILLED_PLAN_CONFIGURATION[enums.PlanType.PAID];
 
 		for (const freePlan of freePlans) {
 			await DB.billedPlan.upsert({
@@ -39,9 +39,14 @@ async function main() {
 				name: freePlan.name,
 				usageLimit: freePlan.usageLimit,
 				rateLimit: freePlan.rateLimit,
-				billingPeriod: freePlan.billingPeriod
-			})
-			console.log("Added", enums.PlanType.FREE, "plan for billing period", freePlan.billingPeriod)
+				billingPeriod: freePlan.billingPeriod,
+			});
+			console.log(
+				"Added",
+				enums.PlanType.FREE,
+				"plan for billing period",
+				freePlan.billingPeriod,
+			);
 		}
 
 		for (const paidPlan of paidPlans) {
@@ -50,16 +55,21 @@ async function main() {
 				name: paidPlan.name,
 				usageLimit: paidPlan.usageLimit,
 				rateLimit: paidPlan.rateLimit,
-				billingPeriod: paidPlan.billingPeriod
-			})
-			console.log("Added", enums.PlanType.PAID, "plan for billing period", paidPlan.billingPeriod)
+				billingPeriod: paidPlan.billingPeriod,
+			});
+			console.log(
+				"Added",
+				enums.PlanType.PAID,
+				"plan for billing period",
+				paidPlan.billingPeriod,
+			);
 		}
 	} catch (error) {
-		console.error(error)
+		console.error(error);
 	} finally {
-		await prisma.$disconnect()
-		console.log("Seed script finished!")
+		await prisma.$disconnect();
+		console.log("Seed script finished!");
 	}
 }
 
-main()
+main();

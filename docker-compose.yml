@@ -64,5 +64,5 @@ services:
 
 volumes:
   postgres:
-    name: postgres-data
+    name: rekindke-postgres-data
     driver: local

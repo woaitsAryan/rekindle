@@ -12,6 +12,7 @@
 		"@rekindle/diagnostics": "workspace:*",
 		"@rekindle/typescript-config": "workspace:*",
 		"@supabase/supabase-js": "^2.47.10",
+		"bullmq": "^5.40.2",
 		"hono": "^4.6.14",
 		"openai": "^4.77.0",
 		"zod": "^3.24.1",

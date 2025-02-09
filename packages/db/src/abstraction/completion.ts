@@ -1,7 +1,5 @@
-import type { Prisma } from "@prisma/client";
 import type {
 	CreateCompletionType,
-	UpsertMemoryType,
 } from "@rekindle/api-schema/validation";
 import prisma from "../..";
 import type { Completion } from "../types";
@@ -20,15 +18,4 @@ export class CompletionDataService {
 			},
 		});
 	}
-
-	queueCreate(data: CreateCompletionType): Prisma.PrismaPromise<Completion> {
-		return this.db.create({
-			data: {
-				totalTokens: data.tokens,
-				metadata: data.metadata,
-				memoryId: data.memoryId
-			}
-		})
-	}
-
 }

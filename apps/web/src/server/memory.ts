@@ -5,19 +5,19 @@ import { APIRoutes } from "@rekindle/api-schema";
 import { interpretPath } from "@rekindle/api-schema/utils";
 
 export async function getAllMemories() {
-	const API = await getAPI()
+	const API = await getAPI();
 
-	const memories = await API.GET(APIRoutes.Memory.GetAll)
+	const memories = await API.GET(APIRoutes.Memory.GetAll);
 
-	return memories
+	return memories;
 }
 
 export async function getMemory(memoryId: string) {
-	const API = await getAPI()
+	const API = await getAPI();
 
-	const path = interpretPath(APIRoutes.Memory.Get, { memoryId })
+	const path = interpretPath(APIRoutes.Memory.Get, { memoryId });
 
-	const memory = await API.GET(path)
+	const memory = await API.GET(path);
 
-	return memory
+	return memory;
 }

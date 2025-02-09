@@ -1,37 +1,92 @@
-import type { Prisma } from "@prisma/client";
-import prisma from "@rekindle/db";
-import { createScopedLogger } from "@rekindle/diagnostics";
+import { redisClient } from "@/loaders/redis";
+import prisma, { type PrismaClient } from "@rekindle/db";
+import { createScopedLogger, LogScope } from "@rekindle/diagnostics";
+import { Queue, Worker } from "bullmq";
+
+const QUEUE_NAME = "dbOperations";
+
+const dbOperationsQueue = new Queue(QUEUE_NAME, {
+	connection: redisClient,
+});
+
+type OperationArgs<
+	M extends keyof PrismaClient,
+	O extends keyof PrismaClient[M]
+> = Parameters<Extract<PrismaClient[M][O], (...args: any) => any>>;
+
+type OperationArg<
+	M extends keyof PrismaClient,
+	O extends keyof PrismaClient[M]
+> = OperationArgs<M, O> extends [infer P] ? P : never;
 
 export class DatabaseQueryQueue {
-	private queries: Array<Prisma.PrismaPromise<any>>;
-	private logger = createScopedLogger("dbQueue");
+	private readonly logger = createScopedLogger(LogScope.DatabaseQueryQueue);
+	private worker?: Worker;
 
 	constructor() {
-		this.queries = [];
+		this.logger.info("Creating DatabaseQueryQueue instance");
 	}
 
-	public addQuery(query: Prisma.PrismaPromise<any>) {
-		this.queries.push(query);
-		if (this.queries.length > 10) {
-			this.flushQueries();
-		}
-	}
-
-	private async flushQueries() {
-		if (this.queries.length > 0) {
-			const transaction = prisma.$transaction(this.queries);
-			try {
-				await transaction;
-				this.logger.info(`Flushed ${this.queries.length} queries`);
-			} catch (error) {
-				this.logger.error("Transaction failed: ", error);
-			}
-			this.queries = [];
+	public async addJob<
+		M extends keyof PrismaClient,
+		O extends keyof PrismaClient[M]
+	>(
+		model: M,
+		operation: O,
+		data: OperationArg<M, O>
+	) {
+		try {
+			await dbOperationsQueue.add(
+				operation as string,
+				{
+					model,
+					operation,
+					data,
+				},
+				{
+					attempts: 1,
+					backoff: { type: "exponential", delay: 1000 },
+				},
+			);
+			this.logger.info(
+				`Job added to queue: ${String(model)}.${String(operation)}`,
+			);
+		} catch (error) {
+			this.logger.error(
+				`Failed to add job to queue: ${String(model)}.${String(operation)}`,
+				error,
+			);
 		}
 	}
 
 	public start() {
-		setInterval(() => this.flushQueries(), 5000);
+		this.worker = new Worker(
+			QUEUE_NAME,
+			async (job) => {
+				const { model, operation, data } = job.data;
+				this.logger.info(`Processing job: ${model}.${String(operation)}`);
+				try {
+					// @ts-expect-error
+					await prisma[model][operation](data);
+					this.logger.info(`Job completed: ${model}.${String(operation)}`);
+				} catch (error) {
+					this.logger.error(`Job failed: ${model}.${String(operation)}`, error);
+					throw error;
+				}
+			},
+			{ connection: redisClient, concurrency: 2, lockDuration: 30000 },
+		);
+
+		this.worker.on("failed", (job, err) => {
+			this.logger.error(`Job ${job?.id} failed`, err);
+		});
+	}
+
+	public async shutdown() {
+		if (this.worker) {
+			await this.worker.close();
+			this.logger.info("Worker shut down");
+		}
 	}
 }
 
@@ -45,4 +100,4 @@ export const getDBQueueInstance = (): DatabaseQueryQueue => {
 	return DatabaseQueueInstance;
 };
 
-export const dbQueue = getDBQueueInstance();
+// export const dbQueue = getDBQueueInstance();

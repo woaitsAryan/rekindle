@@ -6,12 +6,12 @@ import type { Session } from "@supabase/supabase-js";
 import { useChat } from "ai/react";
 import { toast } from "sonner";
 
-interface ClientComponentProps {
+interface ChatPageProps {
 	session: Session;
 	id: string;
 }
 
-export default function ClientComponent(props: ClientComponentProps) {
+export default function ChatPage(props: ChatPageProps) {
 	const { messages, input, setInput, append } = useChat({
 		api: `${env.NEXT_PUBLIC_BACKEND_URL}/chat`,
 		headers: {
@@ -20,7 +20,7 @@ export default function ClientComponent(props: ClientComponentProps) {
 		id: props.id,
 		body: { id: props.id },
 		onError(error: Error) {
-			toast.error(error.message)
+			toast.error(error.message);
 		},
 	});
 

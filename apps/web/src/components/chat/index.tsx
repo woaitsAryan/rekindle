@@ -1,21 +1,19 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { env } from "@/env";
+import { APIHeaders } from "@rekindle/api-schema";
+import type { Session } from "@supabase/supabase-js";
 import { type Message, useChat } from "ai/react";
-import { useContext } from "react";
 import { toast } from "sonner";
 import { ChatList } from "./chat-list";
 import { ChatPanel } from "./chat-panel";
 import { ChatScrollAnchor } from "./chat-scroll-anchor";
 import { EmptyScreen } from "./empty-screen";
-import { env } from "@/env";
-import { APIHeaders } from "@rekindle/api-schema";
-import type { Session } from "@supabase/supabase-js";
 
 export interface ChatProps extends React.ComponentProps<"div"> {
 	initialMessages?: Message[];
 	id: string;
-	session: Session
+	session: Session;
 }
 
 export function Chat(props: ChatProps) {
@@ -34,10 +32,8 @@ export function Chat(props: ChatProps) {
 		});
 
 	return (
-		<div className="relative w-full md:w-2/3 bg-background">
-			<div
-				className={"pb-[200px] pt-4 md:pt-10"}
-			>
+		<div className="flex flex-col bg-background h-full w-full justify-between">
+			<div className="bg-background my-12">
 				{messages.length ? (
 					<>
 						<ChatList messages={messages} />

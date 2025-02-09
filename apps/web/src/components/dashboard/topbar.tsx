@@ -1,6 +1,8 @@
 "use client";
+import { createClient } from "@/lib/supabase/client";
 import { DramaIcon, HeartOff } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
+import { toast } from "sonner";
 import { MobileSidebar } from "./mobile-sidebar";
 
 function pathNameToTitle(pathname: string | null): {
@@ -28,21 +30,35 @@ function pathNameToTitle(pathname: string | null): {
 	}
 	return { title, icon };
 }
+
 function TopBar() {
 	const pathname = usePathname();
+	const { title, icon } = pathNameToTitle(pathname);
+	const supabase = createClient();
+
+	const handleSignOut = async () => {
+		await supabase.auth.signOut();
+
+		toast.info("Signed out successfully");
+
+		redirect("/");
+	};
 
 	return (
-		<div className="flex items-center justify-center h-10 w-full bg-white/60 text-black">
-			<div className="px-4 sm:hidden">
+		<div className="flex items-center h-16 w-full bg-white border-b border-[#e3f2f9]">
+			<div className="px-6 sm:hidden">
 				<MobileSidebar />
 			</div>
-			<nav className="flex flex-row justify-center items-center w-full mr-[50px]">
-				<div className="flex items-center space-x-1">
-					<div> {pathNameToTitle(pathname).icon}</div>
-					<div className="text-sm font-medium text-center text-black">
-						{<span> {pathNameToTitle(pathname).title}</span>}
-					</div>
+			<nav className="flex flex-row items-center w-full px-6 justify-around">
+				<div className="flex items-center space-x-3">
+					<div className="text-[#023047]">{icon}</div>
+					<h1 className="text-lg font-medium font-inter text-[#023047]">
+						{title}
+					</h1>
 				</div>
+				<button type="submit" onClick={handleSignOut}>
+					Sign out
+				</button>
 			</nav>
 		</div>
 	);

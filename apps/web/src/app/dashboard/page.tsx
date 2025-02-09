@@ -1,20 +1,14 @@
 import { generateId } from "@/lib/id";
 import { getCustomerFromCookies, getCustomerSession } from "@/server/customer";
 import { redirect } from "next/navigation";
-import ClientComponent from "./testing";
+import CustomerDashboard from "./dashboard";
 
 export default async function DashboardWrapper() {
-	const user = await getCustomerFromCookies();
-	const session = await getCustomerSession();
-	const id = generateId(20, "mem_");
+	const customer = await getCustomerFromCookies(true);
 
-	if (!user || !session) {
-		redirect("/dashboard");
+	if (!customer) {
+		redirect("/login");
 	}
 
-	return (
-		<main>
-			<ClientComponent session={session} id={id} />
-		</main>
-	);
+	return <CustomerDashboard customer={customer} />;
 }

@@ -1,6 +1,10 @@
+import type {
+	CreateBilledPlanType,
+	GetUniqueBilledPlanType,
+	UpsertBilledPlanType,
+} from "@rekindle/api-schema/validation";
 import prisma from "../..";
 import type { BilledPlan } from "../types";
-import type { CreateBilledPlanType, GetUniqueBilledPlanType, UpsertBilledPlanType } from "@rekindle/api-schema/validation";
 
 export class BilledPlanDataService {
 	private get db() {
@@ -14,7 +18,7 @@ export class BilledPlanDataService {
 				type: data.type,
 				usageLimit: data.usageLimit,
 				rateLimit: data.rateLimit,
-				billingPeriod: data.billingPeriod
+				billingPeriod: data.billingPeriod,
 			},
 		});
 	}
@@ -26,9 +30,9 @@ export class BilledPlanDataService {
 					type: data.type,
 					billingPeriod: data.billingPeriod,
 				},
-				tombstoned: false
-			}
-		})
+				tombstoned: false,
+			},
+		});
 	}
 
 	async upsert(data: UpsertBilledPlanType): Promise<BilledPlan> {
@@ -38,20 +42,20 @@ export class BilledPlanDataService {
 					type: data.type,
 					billingPeriod: data.billingPeriod,
 				},
-				tombstoned: false
+				tombstoned: false,
 			},
 			create: {
 				name: data.name,
 				type: data.type,
 				usageLimit: data.usageLimit,
 				rateLimit: data.rateLimit,
-				billingPeriod: data.billingPeriod
+				billingPeriod: data.billingPeriod,
 			},
 			update: {
 				usageLimit: data.usageLimit,
 				rateLimit: data.rateLimit,
-				name: data.name
-			}
-		})
+				name: data.name,
+			},
+		});
 	}
 }

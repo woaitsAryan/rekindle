@@ -3,10 +3,11 @@
 import { logger } from "@/lib/logger";
 import { createClient } from "@/lib/supabase/server";
 import { DB } from "@rekindle/db";
-import type { User } from "@supabase/supabase-js";
-import { enums } from "@rekindle/db/enums"
+import { enums } from "@rekindle/db/enums";
+import type { Customer, FindUniqueCustomerReturn } from "@rekindle/db/types";
+import type { Session, User } from "@supabase/supabase-js";
 
-console.warn = () => { };
+console.warn = () => {};
 
 export async function getCustomer(user: User) {
 	if (!user.email) {
@@ -15,24 +16,24 @@ export async function getCustomer(user: User) {
 	}
 
 	if (!user.user_metadata.full_name) {
-		logger.error("Full name not found in user")
-		throw new Error("Full name not found")
+		logger.error("Full name not found in user");
+		throw new Error("Full name not found");
 	}
 
 	const existingCustomer = await DB.customer.findUnique({
-		customerId: user.id
-	})
+		customerId: user.id,
+	});
 
-	if (existingCustomer) return existingCustomer
+	if (existingCustomer) return existingCustomer;
 
 	const freePlan = await DB.billedPlan.findUnique({
 		type: enums.PlanType.FREE,
-		billingPeriod: enums.BillingPeriod.INFINITE
-	})
+		billingPeriod: enums.BillingPeriod.INFINITE,
+	});
 
 	if (!freePlan) {
-		logger.error("Free billed plan not found")
-		throw new Error("Free billed plan not found")
+		logger.error("Free billed plan not found");
+		throw new Error("Free billed plan not found");
 	}
 
 	const newCustomer = await DB.customer.create({
@@ -40,18 +41,20 @@ export async function getCustomer(user: User) {
 		customerId: user.id,
 		metadata: user.user_metadata,
 		name: user.user_metadata.full_name,
-		billedPlanId: freePlan.id
-	})
+		billedPlanId: freePlan.id,
+	});
 
 	await DB.billedUsage.create({
 		customerId: newCustomer.id,
 		periodStart: new Date(),
-	})
+	});
 
 	return newCustomer;
 }
 
-export async function getCustomerFromCookies() {
+export async function getCustomerFromCookies<T extends boolean>(
+	include_all: T = false as T,
+): Promise<FindUniqueCustomerReturn<T> | null> {
 	const supabase = await createClient();
 
 	const { data, error } = await supabase.auth.getUser();
@@ -66,9 +69,12 @@ export async function getCustomerFromCookies() {
 		return null;
 	}
 
-	const existingCustomer = await DB.customer.findUnique({
-		customerId: data.user.id
-	})
+	const existingCustomer = await DB.customer.findUnique(
+		{
+			customerId: data.user.id,
+		},
+		include_all,
+	);
 
 	if (!existingCustomer) {
 		console.error("Customer not found");
@@ -78,7 +84,7 @@ export async function getCustomerFromCookies() {
 	return existingCustomer;
 }
 
-export async function getCustomerSession() {
+export async function getCustomerSession(): Promise<Session | null> {
 	const supabase = await createClient();
 
 	const { data, error } = await supabase.auth.getSession();
