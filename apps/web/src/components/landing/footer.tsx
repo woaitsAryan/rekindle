@@ -32,14 +32,14 @@ export default function Footer() {
 						))}
 					</div>
 				</section>
-				<button
+				{/* <button
 					type="button"
 					onClick={() => {
 						toast.info("Hello world");
 					}}
 				>
 					Click
-				</button>
+				</button> */}
 			</div>
 		</footer>
 	);

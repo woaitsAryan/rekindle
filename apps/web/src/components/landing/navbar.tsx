@@ -7,9 +7,9 @@ import {
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import * as React from "react";
+import { usePathname, redirect } from "next/navigation";
 import Logo from "../logo";
+import { toast } from "sonner";
 
 interface NavbarProps {
 	navbarLinks: typeof NavbarConfig;
@@ -17,6 +17,21 @@ interface NavbarProps {
 
 export default function Navbar(props: NavbarProps) {
 	const pathname = usePathname();
+
+	const handleNavClick = (
+		e: React.MouseEvent,
+		navbarLink: (typeof NavbarConfig)[0]
+	) => {
+		if (!navbarLink.implemented) {
+			e.preventDefault();
+			toast.error("This feature is not yet available.", {
+				description: "We are working on it!",
+			});
+			return
+		}
+
+		redirect(navbarLink.href);
+	};
 
 	return (
 		<div
@@ -30,13 +45,20 @@ export default function Navbar(props: NavbarProps) {
 						{props.navbarLinks.map((navbarLink) => (
 							<NavigationMenuItem
 								key={navbarLink.href}
-								className={`${pathname === navbarLink.href && "border-b-2 border-blue-500 font-bold"} px-3 py-1.5 transition-all duration-200 hover:text-blue-500`}
+								className={`${
+									pathname === navbarLink.href &&
+									"border-b-2 border-blue-500 font-bold"
+								} px-3 py-1.5 transition-all duration-200 hover:text-blue-500`}
 							>
-								<Link href={navbarLink.href} legacyBehavior passHref>
+								<button
+									onClick={(e) => handleNavClick(e, navbarLink)}
+									type="button"
+									className="cursor-pointer"
+								>
 									<NavigationMenuLink className="">
 										{navbarLink.name}
 									</NavigationMenuLink>
-								</Link>
+								</button>
 							</NavigationMenuItem>
 						))}
 					</NavigationMenuList>
@@ -56,21 +78,26 @@ export const NavbarConfig = [
 	{
 		name: "Home",
 		href: "/",
+		implemented: true,
 	},
 	{
 		name: "About",
 		href: "/about",
+		implemented: false,
 	},
 	{
 		name: "How it works",
 		href: "/how-it-works",
+		implemented: false,
 	},
 	{
 		name: "Partnerships",
 		href: "/partnership",
+		implemented: false,
 	},
 	{
-		name: "Ask clara",
-		href: "/clara",
+		name: "Ask rekindle",
+		href: "/rekindle",
+		implemented: false,
 	},
 ];

@@ -1,5 +1,9 @@
+'use client'
+
 import Image from "next/image";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 export default function Hero() {
 	return (
@@ -26,12 +30,20 @@ export default function Hero() {
 						Dementia
 					</h3>
 					<div className="flex flex-row gap-4">
-						<Button className="bg-cyan-950 hover:bg-cyan-800 text-base rounded-sm min-w-48 py-7">
+						<Button
+							className="bg-cyan-950 hover:bg-cyan-800 text-base rounded-sm min-w-48 py-7"
+							onClick={() => redirect("/dashboard/chat")}
+						>
 							Start writing
 						</Button>
 						<Button
 							variant="outline"
 							className="text-lg py-7 min-w-48 rounded-sm "
+							onClick={() =>
+								toast.error("This feature is not yet available.", {
+									description: "We are working on it!",
+								})
+							}
 						>
 							Learn more
 						</Button>
