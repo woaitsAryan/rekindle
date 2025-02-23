@@ -1,20 +1,22 @@
 import { z } from "zod";
 
+export const EmotionsArray = [
+	"anger",
+	"anticipation",
+	"disgust",
+	"fear",
+	"joy",
+	"love",
+	"optimism",
+	"pessimism",
+	"sadness",
+	"surprise",
+	"trust",
+] as const
+
 export const EmotionsEnum = z.object({
 	emotions: z.array(
-		z.enum([
-			"anger",
-			"anticipation",
-			"disgust",
-			"fear",
-			"joy",
-			"love",
-			"optimism",
-			"pessimism",
-			"sadness",
-			"surprise",
-			"trust",
-		]),
+		z.enum(EmotionsArray),
 	),
 });
 

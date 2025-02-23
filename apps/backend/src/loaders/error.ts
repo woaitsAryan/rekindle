@@ -1,4 +1,4 @@
-import { logger } from "@/config/logger";
+import { logger } from "@/loaders/logger";
 import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 

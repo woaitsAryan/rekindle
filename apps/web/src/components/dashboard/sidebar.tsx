@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Drama, HeartOff, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Logo from "../logo";
 
 interface SidebarLinkProps {
 	link: {
@@ -21,7 +22,7 @@ function SidebarLink({ link, pathname }: SidebarLinkProps) {
 			<button
 				className={cn(
 					"flex items-center space-x-3 w-full mb-2 p-3 hover:bg-[#e3f2f9] transition-colors rounded-sm text-[#023047]",
-					pathname?.includes(link.link) && "bg-[#e3f2f9] font-medium",
+					pathname === link.link && "bg-[#e3f2f9] font-medium",
 				)}
 				type="button"
 			>
@@ -41,7 +42,7 @@ export function Sidebar() {
 		<aside className="sticky inset-y-0 left-0 top-0 z-10 hidden flex-col sm:flex bg-white w-64 border-r border-[#e3f2f9]">
 			<nav className="flex flex-col p-6">
 				<Link href="/" className="h-16 transition-all flex items-center mb-8">
-					{/* <Image width={130} height={20} src={"/logo.png"} alt="Logo" /> */}
+					<Logo className="h-12 w-auto" />
 				</Link>
 
 				<div className="space-y-2">
@@ -80,6 +81,6 @@ export const sidebarLinks: SidebarLink[] = [
 	{
 		title: "Memories",
 		icon: HeartOff,
-		link: "/memories",
+		link: "/dashboard/memories",
 	},
 ];

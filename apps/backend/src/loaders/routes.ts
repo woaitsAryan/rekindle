@@ -7,11 +7,12 @@ import { APIRoutes } from "@rekindle/api-schema";
 import {
 	ChatBodySchema,
 	PaginationQuery,
+	PaginationQueryWithQuery,
 } from "@rekindle/api-schema/validation";
 import type { Context, Hono } from "hono";
 import { handleGlobalError } from "./error";
-import { getDBQueueInstance } from "@/helpers/queue";
-import { enums } from "@rekindle/db/enums";
+import { getFunctionQueueInstance } from "./queue";
+// import { getPrismaQueueInstance } from "./db-queue";
 
 export default function setupRoutes(app: Hono) {
 	app.get("/", (c) => c.text("Hello world!"));
@@ -28,7 +29,7 @@ export default function setupRoutes(app: Hono) {
 
 	app.get(
 		APIRoutes.Memory.GetAll,
-		zValidator("query", PaginationQuery),
+		zValidator("query", PaginationQueryWithQuery),
 		getAllMemories,
 	);
 	app.get(APIRoutes.Memory.Get, getMemory);

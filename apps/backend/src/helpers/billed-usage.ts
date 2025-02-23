@@ -8,8 +8,7 @@ export function getMatchingBilledUsage(
 	for (const billedUsage of billedUsages) {
 		if (
 			billedUsage.periodStart < currentDate &&
-			billedUsage.periodEnd &&
-			billedUsage.periodEnd > currentDate
+			(!billedUsage.periodEnd || billedUsage.periodEnd > currentDate)
 		) {
 			return billedUsage;
 		}

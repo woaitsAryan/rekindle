@@ -1,9 +1,10 @@
 import { ENV, init_env } from "@/config/env";
 import { Hono } from "hono";
-import { logger } from "./config/logger";
-import loadServer from "./loaders";
-import { getDBQueueInstance } from "./helpers/queue";
-import { redisClient } from "./loaders/redis";
+import { logger } from "@/loaders/logger";
+import loadServer from "@/loaders";
+// import { getPrismaQueueInstance } from "@/loaders/db-queue";
+import { redisClient } from "@/loaders/redis";
+import { getFunctionQueueInstance } from "@/loaders/queue";
 
 init_env();
 
@@ -13,7 +14,8 @@ loadServer(app);
 
 const handleShutdown = () => {
 	logger.info('Received shutdown signal. Starting graceful shutdown...');
-	getDBQueueInstance().shutdown()
+	// getPrismaQueueInstance().shutdown()
+	getFunctionQueueInstance().shutdown()
 	redisClient.quit()
 	process.exit(0);
 };

@@ -7,11 +7,13 @@
 	},
 	"dependencies": {
 		"@hono/zod-validator": "^0.4.2",
+		"@nozbe/microfuzz": "^1.0.0",
 		"@rekindle/api-schema": "workspace:*",
 		"@rekindle/db": "workspace:*",
 		"@rekindle/diagnostics": "workspace:*",
 		"@rekindle/typescript-config": "workspace:*",
 		"@supabase/supabase-js": "^2.47.10",
+		"async-prisma-queue": "^1.0.2",
 		"bullmq": "^5.40.2",
 		"hono": "^4.6.14",
 		"openai": "^4.77.0",

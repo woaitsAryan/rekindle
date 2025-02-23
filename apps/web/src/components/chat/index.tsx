@@ -19,7 +19,7 @@ export interface ChatProps extends React.ComponentProps<"div"> {
 export function Chat(props: ChatProps) {
 	const { messages, append, reload, stop, isLoading, input, setInput } =
 		useChat({
-			api: `${env.NEXT_PUBLIC_BACKEND_URL}/chat`,
+			api: `${env.NEXT_PUBLIC_BACKEND_URL}/v1/chat`,
 			initialMessages: props.initialMessages,
 			id: props.id,
 			headers: {

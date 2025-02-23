@@ -4,6 +4,7 @@ import { DramaIcon, HeartOff } from "lucide-react";
 import { redirect, usePathname } from "next/navigation";
 import { toast } from "sonner";
 import { MobileSidebar } from "./mobile-sidebar";
+import Logo from "../logo";
 
 function pathNameToTitle(pathname: string | null): {
 	title: string;

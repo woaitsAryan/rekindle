@@ -4,7 +4,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { CustomerWithAllIncludes } from "@rekindle/db/types";
-import { format } from "date-fns";
 import { CalendarIcon, Mail, User } from "lucide-react";
 import React from "react";
 
@@ -14,7 +13,7 @@ interface DashboardClientProps {
 
 export default function CustomerDashboard(props: DashboardClientProps) {
 	const customer = props.customer;
-
+	console.log(customer.createdAt)
 	return (
 		<div className="container mx-auto py-10">
 			<Card className="w-full max-w-3xl mx-auto">
@@ -65,7 +64,7 @@ export default function CustomerDashboard(props: DashboardClientProps) {
 										<CalendarIcon className="w-4 h-4 text-muted-foreground" />
 										<span>Created At:</span>
 										<span className="font-medium">
-											{format(customer.createdAt, "PPP")}
+											{new Date(customer.createdAt).toLocaleDateString()}
 										</span>
 									</div>
 								</div>

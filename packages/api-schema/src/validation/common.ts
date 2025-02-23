@@ -24,5 +24,10 @@ export const PaginationQuery = z.object({
 	limit: z.string().default("20").transform(Number).pipe(z.number().int()),
 });
 
+export const PaginationQueryWithQuery = PaginationQuery.extend({
+	query: z.string(),
+});
+
 export type PaginationQueryType = z.infer<typeof PaginationQuery>;
+export type PaginationQueryWithQueryType = z.infer<typeof PaginationQueryWithQuery>;
 export type CompletionMetadataType = z.infer<typeof CompletionMetadata>;

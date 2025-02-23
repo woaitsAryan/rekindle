@@ -20,10 +20,5 @@ export function createScopedLogger(scope: string, level: LogLevel = "debug") {
 		transports: [new transports.Console()],
 	});
 
-	return {
-		error: (message: any, ...args: any[]) => logger.error(message, ...args),
-		warn: (message: any, ...args: any[]) => logger.warn(message, ...args),
-		info: (message: any, ...args: any[]) => logger.info(message, ...args),
-		debug: (message: any, ...args: any[]) => logger.debug(message, ...args),
-	};
+	return logger
 }

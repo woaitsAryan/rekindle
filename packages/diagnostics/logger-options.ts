@@ -1,5 +1,6 @@
 export enum LogScope {
 	Redis = "Redis",
 	DatabaseQueryQueue = "DatabaseQueryQueue",
-	Backend = "Backend"
+	Backend = "Backend",
+	FunctionQueue = "FunctionQueue"
 }

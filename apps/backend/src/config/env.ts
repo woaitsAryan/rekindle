@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { logger } from "./logger";
+import { logger } from "@/loaders/logger";
 
 const envSchema = z.object({
 	OPENAI_API_KEY: z.string().min(1),

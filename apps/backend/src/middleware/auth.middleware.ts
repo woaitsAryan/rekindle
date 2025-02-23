@@ -2,9 +2,9 @@ import type { AuthenticatedEnv } from "@/types/variable";
 import { APIHeaders } from "@rekindle/api-schema";
 import { createMiddleware } from "hono/factory";
 import { HTTPException } from "hono/http-exception";
-import { CONTEXT_VARIABLES } from "../config/constants";
-import { logger } from "../config/logger";
-import { supabase } from "../config/supabase-client";
+import { CONTEXT_VARIABLES } from "@/config/constants";
+import { logger } from "@/loaders/logger";
+import { supabase } from "@/config/supabase-client";
 
 const authMiddleware = createMiddleware<AuthenticatedEnv>(async (c, next) => {
 	const auth_token = c.req.header(APIHeaders.SessionToken);

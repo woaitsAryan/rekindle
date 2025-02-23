@@ -1,4 +1,4 @@
-import { logger } from "@/config/logger";
+import { logger } from "@/loaders/logger";
 import { zValidator as zv } from "@hono/zod-validator";
 import type { ValidationTargets } from "hono";
 import { HTTPException } from "hono/http-exception";
@@ -16,6 +16,7 @@ export const zValidator = (
 				prefix: null,
 				includePath: true,
 			});
+			logger.error(`${c.req.method} ${c.req.url} ${formattedError.toString()}`);
 			throw new HTTPException(400, { message: formattedError.toString() });
 		}
 	});

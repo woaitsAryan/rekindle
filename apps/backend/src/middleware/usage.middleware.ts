@@ -1,5 +1,5 @@
 import { CONTEXT_VARIABLES } from "@/config/constants";
-import { logger } from "@/config/logger";
+import { logger } from "@/loaders/logger";
 import { getMatchingBilledUsage } from "@/helpers/billed-usage";
 import type { AuthenticatedEnv, BilledUsageEnv } from "@/types/variable";
 import { DB } from "@rekindle/db";
