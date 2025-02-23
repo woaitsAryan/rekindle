@@ -31,6 +31,17 @@ services:
         max-size: "200k"
         max-file: "10"
 
+  redis-db:
+    image: redis
+    container_name: redis-db
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    networks:
+      - api-network
+
   # postgres:
   #   image: postgres:16
   #   container_name: postgres-db

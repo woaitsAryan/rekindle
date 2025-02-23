@@ -34,7 +34,7 @@ export function ChatPanel({
 			<ButtonScrollToBottom />
 			<div className="flex flex-col gap-2 w-full justify-center bg-background">
 				<div className="flex h-10 items-center justify-start">
-					{!isLoading ? (
+					{isLoading ? (
 						<Button
 							variant="outline"
 							onClick={() => stop()}
